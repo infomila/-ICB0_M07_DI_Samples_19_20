@@ -7,6 +7,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.System;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -107,6 +108,20 @@ namespace _0_Strings
             }
         }
 
+
+
+        private void txbDataParcial_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+             if (!
+                (
+                      (e.Key >= VirtualKey.Number0 && e.Key <= VirtualKey.Number9)
+                )
+            )
+            {
+                e.Handled = true; // la tecla no ha d'arribar al textbox
+            }
+        }
+
         private void ButtonData_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -125,6 +140,36 @@ namespace _0_Strings
         private void txbNumero_TextChanged(object sender, TextChangedEventArgs e)
         {
 
+        }
+
+        private void txbDataDia_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox txbDia = (TextBox)sender;
+            if (txbDia.Text.Length == 0) return;
+
+            bool hiHaError = false;
+            try
+            {
+                int dia = Int32.Parse(txbDia.Text);
+                hiHaError = (dia < 1 || dia > 31);
+            }
+            catch (Exception)
+            {
+                hiHaError = true;
+            }
+            //---------------------------------------
+            if(hiHaError)
+            {
+                txbDia.Background = new SolidColorBrush(Colors.Lime);
+            } else
+            {
+                // El número està bé
+                if(/* hi ha dos caracters*/ txbDia.Text.Length==2)
+                {
+                    txbDataMes.Focus(FocusState.Programmatic);
+                }
+                txbDia.Background = new SolidColorBrush(Colors.Transparent);
+            }
         }
     }
 }

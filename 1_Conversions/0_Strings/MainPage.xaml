@@ -25,6 +25,16 @@
             <TextBox x:Name="txbNumero" TextChanged="txbNumero_TextChanged" KeyDown="txbNumero_KeyDown"  Margin="10"></TextBox>
             <Button Content="Convert>" Click="ButtonNumero_Click" Margin="10"></Button>
             <TextBox x:Name="txbNumeroConvertida" Margin="10" IsReadOnly="True"></TextBox>
-        </StackPanel>        
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="Data" Margin="10" Width="80" ></TextBlock>
+            <StackPanel Orientation="Horizontal" Margin="10">
+                <TextBox x:Name="txbDataDia" TextChanged="txbDataDia_TextChanged" KeyDown="txbDataParcial_KeyDown" MaxLength="2"></TextBox>
+                <TextBlock Text="-" VerticalAlignment="Center"></TextBlock>
+                <TextBox x:Name="txbDataMes" KeyDown="txbDataParcial_KeyDown"  MaxLength="2"></TextBox>
+                <TextBlock Text="-" VerticalAlignment="Center"></TextBlock>
+                <TextBox x:Name="txbDataAny" KeyDown="txbDataParcial_KeyDown"  MaxLength="2"></TextBox>
+            </StackPanel>
+        </StackPanel>
     </StackPanel>
 </Page>
