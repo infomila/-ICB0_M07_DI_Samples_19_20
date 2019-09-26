@@ -109,6 +109,23 @@ namespace _0_Strings
         }
 
 
+        private void txbDataDia_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            txbDataParcial_KeyDown(sender, e);
+        }
+
+        private void txbDataMes_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            txbDataParcial_KeyDown(sender, e);
+            TextBox txbMes = (TextBox)sender;
+            if(txbMes.Text.Length==0 && e.Key == VirtualKey.Back)
+            {
+                txbDataDia.Focus(FocusState.Programmatic);
+            }
+        }
+
+
+
 
         private void txbDataParcial_KeyDown(object sender, KeyRoutedEventArgs e)
         {
@@ -141,35 +158,81 @@ namespace _0_Strings
         {
 
         }
+        private void txbDataMes_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            validaTotaLaData();
+            GestionaTextBoxNumericAmbSalt(txbDataMes, txbDataAny, 1, 12);
+        }
 
         private void txbDataDia_TextChanged(object sender, TextChangedEventArgs e)
         {
+            validaTotaLaData();
             TextBox txbDia = (TextBox)sender;
-            if (txbDia.Text.Length == 0) return;
+
+            GestionaTextBoxNumericAmbSalt(txbDia, txbDataMes, 1, 31);
+        }
+
+        private void validaTotaLaData()
+        {
+            bool estaBe = true;
+            try
+            {
+                DateTime d = new DateTime(Int32.Parse(txbDataDia.Text),
+                                        Int32.Parse(txbDataMes.Text),
+                                        Int32.Parse(txbDataAny.Text));
+
+            }
+            catch (Exception)
+            {
+                estaBe = false;
+            }
+
+
+            if (estaBe)
+            {
+                imgIsOk.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                imgIsOk.Visibility = Visibility.Collapsed;
+            }
+
+
+        }
+
+
+
+        void GestionaTextBoxNumericAmbSalt(TextBox origen, TextBox desti, int min, int max)
+        {
+            if (origen.Text.Length == 0) return;
 
             bool hiHaError = false;
             try
             {
-                int dia = Int32.Parse(txbDia.Text);
-                hiHaError = (dia < 1 || dia > 31);
+                int dia = Int32.Parse(origen.Text);
+                hiHaError = (dia < min || dia > max);
             }
             catch (Exception)
             {
                 hiHaError = true;
             }
             //---------------------------------------
-            if(hiHaError)
+            if (hiHaError)
             {
-                txbDia.Background = new SolidColorBrush(Colors.Lime);
-            } else
+                origen.Background = new SolidColorBrush(Colors.OrangeRed);
+            }
+            else
             {
                 // El número està bé
-                if(/* hi ha dos caracters*/ txbDia.Text.Length==2)
+                if (/* hi ha dos caracters*/ origen.Text.Length == 2)
                 {
-                    txbDataMes.Focus(FocusState.Programmatic);
+                    desti.Focus(FocusState.Programmatic);
                 }
-                txbDia.Background = new SolidColorBrush(Colors.Transparent);
+                origen.Background = new SolidColorBrush(Colors.Transparent);
             }
         }
-    }
-}
+
+    } // tancament de la classe
+
+
+} // tancament namespace
