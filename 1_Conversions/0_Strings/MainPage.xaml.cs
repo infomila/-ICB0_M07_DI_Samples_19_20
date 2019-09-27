@@ -123,7 +123,15 @@ namespace _0_Strings
                 txbDataDia.Focus(FocusState.Programmatic);
             }
         }
-
+        private void txbDataAny_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            txbDataParcial_KeyDown(sender, e);
+            TextBox txbAny = (TextBox)sender;
+            if (txbAny.Text.Length == 0 && e.Key == VirtualKey.Back)
+            {
+                txbDataMes.Focus(FocusState.Programmatic);
+            }
+        }
 
 
 
@@ -131,6 +139,7 @@ namespace _0_Strings
         {
              if (!
                 (
+                       e.Key == VirtualKey.Tab ||
                       (e.Key >= VirtualKey.Number0 && e.Key <= VirtualKey.Number9)
                 )
             )
@@ -177,10 +186,16 @@ namespace _0_Strings
             bool estaBe = true;
             try
             {
-                DateTime d = new DateTime(Int32.Parse(txbDataDia.Text),
+                DateTime d = new DateTime(
+                                        Int32.Parse(txbDataAny.Text),
                                         Int32.Parse(txbDataMes.Text),
-                                        Int32.Parse(txbDataAny.Text));
+                                        Int32.Parse(txbDataDia.Text)
+                                        );
 
+                if (Int32.Parse(txbDataAny.Text) < 1900)
+                {
+                    estaBe = false;
+                }
             }
             catch (Exception)
             {
@@ -232,6 +247,25 @@ namespace _0_Strings
             }
         }
 
+        private void txbDataAny_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            validaTotaLaData();
+
+        }
+
+        private void txbDataDiaiMes_LostFocus(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                TextBox t = (TextBox)sender;
+                int dia = (Int32.Parse(t.Text));
+                t.Text = dia.ToString("00");
+            }
+            catch (Exception)
+            {
+
+            }
+        }
     } // tancament de la classe
 
 

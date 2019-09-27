@@ -27,16 +27,19 @@
             <TextBox x:Name="txbNumeroConvertida" Margin="10" IsReadOnly="True"></TextBox>
         </StackPanel>
         <StackPanel Orientation="Horizontal">
-            <TextBlock Text="Data" Margin="10" Width="80" ></TextBlock>
-            <StackPanel Orientation="Horizontal" Margin="10">
-                <TextBox x:Name="txbDataDia"  TextChanged="txbDataDia_TextChanged" KeyDown="txbDataDia_KeyDown" MaxLength="2"></TextBox>
+            <TextBlock Text="Data" Margin="10" Width="80" VerticalAlignment="Center"></TextBlock>
+            <StackPanel Orientation="Horizontal" Margin="10" Height="40">
+                <TextBox x:Name="txbDataDia" VerticalAlignment="Center" Width="40" MinWidth="40" LostFocus="txbDataDiaiMes_LostFocus"  TextChanged="txbDataDia_TextChanged" KeyDown="txbDataDia_KeyDown" MaxLength="2"></TextBox>
                 <TextBlock Text="-" VerticalAlignment="Center"></TextBlock>
-                <TextBox x:Name="txbDataMes" TextChanged="txbDataMes_TextChanged" KeyDown="txbDataMes_KeyDown"  MaxLength="2"></TextBox>
+                <TextBox x:Name="txbDataMes" VerticalAlignment="Center" Width="40" MinWidth="40" LostFocus="txbDataDiaiMes_LostFocus"  TextChanged="txbDataMes_TextChanged" KeyDown="txbDataMes_KeyDown"  MaxLength="2"></TextBox>
                 <TextBlock Text="-" VerticalAlignment="Center"></TextBlock>
-                <TextBox x:Name="txbDataAny" KeyDown="txbDataParcial_KeyDown"  MaxLength="2"></TextBox>
+                <TextBox x:Name="txbDataAny" VerticalAlignment="Center"  Width="100" MinWidth="100"  TextChanged="txbDataAny_TextChanged" KeyDown="txbDataAny_KeyDown"  MaxLength="4"></TextBox>
                 <!--TextBlock Foreground="Green" VerticalAlignment="Center" FontSize="30" FontWeight="ExtraBold">✓👍</-->
-                <Image x:Name="imgIsOk" Visibility="Collapsed" Source="Assets/ok.png"></Image>
+                <Image x:Name="imgIsOk" Visibility="Visible"  Source="Assets/ok.png" Stretch="Fill"></Image>
             </StackPanel>
         </StackPanel>
+        <DatePicker HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top"/>
+        <CalendarView HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top"/>
+        <CalendarDatePicker HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top"/>
     </StackPanel>
 </Page>
