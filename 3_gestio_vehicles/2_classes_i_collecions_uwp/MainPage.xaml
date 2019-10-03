@@ -12,6 +12,7 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="80"></ColumnDefinition>
+            <ColumnDefinition Width="auto"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -24,7 +25,7 @@
             <RowDefinition Height="auto"></RowDefinition>
         </Grid.RowDefinitions>
         <!-- ========================================= -->
-        <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2"
+        <StackPanel Orientation="Horizontal" Grid.ColumnSpan="3"
                     HorizontalAlignment="Center">
             <Button Content="&lt;" Margin="10" Click="Button_Click_Enrere"></Button>
             <Button Content="New"></Button>
@@ -41,11 +42,15 @@
         <TextBlock Text="Matricula:" VerticalAlignment="Center"
                    Margin="10"
                    Grid.Column="0" Grid.Row="2" ></TextBlock>
+        
         <TextBox x:Name="txbMatricula" Grid.Column="1" Grid.Row="2" 
                  MinWidth="200" 
                  IsEnabled="true"
                  Margin="10"
                  MaxWidth="400" HorizontalAlignment="Left" ></TextBox>
+        <TextBlock x:Name="txbErrorMatricula" Grid.Column="2" Grid.Row="2" 
+                   Text="Matricula errònia" VerticalAlignment="Center"></TextBlock>
+        
         <TextBlock Text="Marca:" VerticalAlignment="Center"
                    Margin="10"
                    Grid.Column="0" Grid.Row="3" ></TextBlock>
@@ -63,10 +68,10 @@
                    Grid.Column="0" Grid.Row="4" ></TextBlock>
 
         <ListBox x:Name="cboModel" VerticalAlignment="Center"
-                    Margin="10"
-                 Height="100"
-                    MinWidth="200" 
-                    MaxWidth="400"
+                    Margin="0"
+                 Height="200"
+                    MinWidth="100" 
+                    MaxWidth="200"
                    Grid.Column="1" Grid.Row="4"></ListBox>
 
 
@@ -82,10 +87,10 @@
         </StackPanel>
         <StackPanel Orientation="Horizontal" 
                     Grid.Row="6"
-                    Grid.ColumnSpan="2"
+                    Grid.ColumnSpan="3"
                     HorizontalAlignment="Center">
             <Button Content="Cancel" Margin="10"></Button>
-            <Button Content="Save"></Button>
+            <Button Content="Save" Click="Button_Click_Save"></Button>
         </StackPanel>
     </Grid>
 </Page>

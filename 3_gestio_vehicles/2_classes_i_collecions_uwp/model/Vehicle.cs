@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace _2_classes_i_collecions_uwp.model
@@ -51,9 +52,18 @@ namespace _2_classes_i_collecions_uwp.model
         public string Matricula {
                             get => matricula;
                             set  {
-                if (value == null || value.Length != 7)
-                    throw new Exception("MATRICULA NO VÀLIDA");
-                                matricula = value;
+                                    if (value == null )
+                                        throw new Exception("MATRICULA NO VÀLIDA");
+     
+                                    // Instantiate the regular expression object.
+                                    Regex r = new Regex("^[0-9]{4}[ZXCVBNMSDFGHJKLQWRTYP]{3}$", RegexOptions.IgnoreCase);
+
+                                    // Match the regular expression pattern against a text string.
+                                    Match m = r.Match(value);
+                                    if(m.Success) { matricula = value; } else
+                                    {
+                                        throw new Exception("MATRICULA NO VÀLIDA");
+                                    }
                             }
         }
         public string Marca { get => marca; set => marca = value; }
