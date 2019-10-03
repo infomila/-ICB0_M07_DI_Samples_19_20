@@ -26,9 +26,9 @@
         <!-- ========================================= -->
         <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2"
                     HorizontalAlignment="Center">
-            <Button Content="&lt;" Margin="10"></Button>
+            <Button Content="&lt;" Margin="10" Click="Button_Click_Enrere"></Button>
             <Button Content="New"></Button>
-            <Button Content="&gt;" Margin="10"></Button>
+            <Button Content="&gt;" Margin="10" Click="Button_Click_Endavant"></Button>
         </StackPanel>
         <TextBlock Text="Codi:" VerticalAlignment="Center"
                    Margin="10"
@@ -62,11 +62,12 @@
                    Margin="10"
                    Grid.Column="0" Grid.Row="4" ></TextBlock>
 
-        <ComboBox x:Name="cboModel" VerticalAlignment="Center"
+        <ListBox x:Name="cboModel" VerticalAlignment="Center"
                     Margin="10"
+                 Height="100"
                     MinWidth="200" 
                     MaxWidth="400"
-                   Grid.Column="1" Grid.Row="4"></ComboBox>
+                   Grid.Column="1" Grid.Row="4"></ListBox>
 
 
         <TextBlock Text="Tipus:" VerticalAlignment="Center"

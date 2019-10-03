@@ -23,6 +23,8 @@ namespace _2_classes_i_collecions_uwp
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        private int indexVehicleActual = 0;
+
         public MainPage()
         {
             this.InitializeComponent();
@@ -34,12 +36,37 @@ namespace _2_classes_i_collecions_uwp
             cboMarca.ItemsSource = Marca.GetMarques();
             cboMarca.DisplayMemberPath = "Nom";
 
-
+            //----------------------------------------------------
+            MostrarVehicle(indexVehicleActual);
+        }
+        private void MostrarVehicle( int index )
+        {
             List<Vehicle> vehicles = Vehicle.GetVehicles();
-            Vehicle primer = vehicles[0];
-            txbMatricula.Text = primer.Matricula;
-                
+            if(vehicles.Count> index && index>=0)
+            {
+                MostrarVehicle(vehicles[index]);
+            }
+        }
 
+
+        private void MostrarVehicle(Vehicle v)
+        {
+            txbCodi.Text = v.Codi.ToString();
+            txbMatricula.Text = v.Matricula;
+            if (v.Tipus == EnumTipus.COTXE)
+            {
+                rdoCotxe.IsChecked = true;
+            }
+            else
+            {
+                rdoMoto.IsChecked = true;
+            }
+            //----------------------------------------
+            string marca = v.Marca;
+            cboMarca.SelectedValuePath = "Nom";
+            cboMarca.SelectedValue = marca;
+
+            cboModel.SelectedValue = v.Model;
         }
 
         private void cboMarca_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -51,6 +78,23 @@ namespace _2_classes_i_collecions_uwp
 
             cboModel.ItemsSource = seleccionada.Models;
 
+        }
+
+        private void Button_Click_Endavant(object sender, RoutedEventArgs e)
+        {
+            this.indexVehicleActual = (this.indexVehicleActual + 1) % Vehicle.GetVehicles().Count;
+            MostrarVehicle(indexVehicleActual);
+        }
+
+        private void Button_Click_Enrere
+            (object sender, RoutedEventArgs e)
+        {
+            this.indexVehicleActual--;
+            if (this.indexVehicleActual < 0)
+            {
+                this.indexVehicleActual = Vehicle.GetVehicles().Count - 1;
+            }
+            MostrarVehicle(indexVehicleActual);
         }
 
         //private void Page_Loaded(object sender, RoutedEventArgs e)
