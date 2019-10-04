@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 
 namespace _2_classes_i_collecions_uwp.model
 {
+    
+
     class Vehicle
     {
         private static List<Vehicle> vehicles;
@@ -17,7 +19,7 @@ namespace _2_classes_i_collecions_uwp.model
             {
                 vehicles = new List<Vehicle>();
                 Vehicle v1 = new Vehicle(1, "1234JKJ", "Seat", "Leon", EnumTipus.COTXE);
-                Vehicle v2 = new Vehicle(2, "9999GGG", "Seat", "Exeo", EnumTipus.COTXE);
+                Vehicle v2 = new Vehicle(20, "9999GGG", "Seat", "Exeo", EnumTipus.COTXE);
                 Vehicle v3 = new Vehicle(3, "3333JJJ", "Volkswagen", "Golf", EnumTipus.COTXE);
                 vehicles.Add(v1);
                 vehicles.Add(v2);

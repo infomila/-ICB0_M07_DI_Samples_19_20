@@ -19,6 +19,14 @@ using Windows.UI.Xaml.Navigation;
 
 namespace _2_classes_i_collecions_uwp
 {
+
+
+    enum ModeEdicio
+    {
+        MODE_EDIT,
+        MODE_NEW
+    }
+
     /// <summary>
     /// Página vacía que se puede usar de forma independiente o a la que se puede navegar dentro de un objeto Frame.
     /// </summary>
@@ -85,8 +93,13 @@ namespace _2_classes_i_collecions_uwp
             //List<Marca> marques = Marca.GetMarques();
             //Marca seleccionada = marques[indexMarcaSeleccionada];
             Marca seleccionada = (Marca)cboMarca.SelectedItem;
-
-            cboModel.ItemsSource = seleccionada.Models;
+            if (seleccionada != null)
+            {
+                cboModel.ItemsSource = seleccionada.Models;
+            } else
+            {
+                cboModel.ItemsSource = null;
+            }
 
         }
 
@@ -111,27 +124,42 @@ namespace _2_classes_i_collecions_uwp
         {
             if (ValidaCamps())
             {
-
-                // Cerquem el vehicle actual
-                Vehicle actual = vehicles[indexVehicleActual];
-                // modifiquem la matrícula
-                actual.Matricula = txbMatricula.Text;
-                // modifiquem el tipus
-                if (rdoCotxe.IsChecked == true)
+                if(modeActual == ModeEdicio.MODE_NEW)
                 {
-                    actual.Tipus = EnumTipus.COTXE;
-                }
-                else
+                    Vehicle nou = new Vehicle(
+                            Int32.Parse( txbCodi.Text ),
+                            txbMatricula.Text,
+                            (string)cboMarca.SelectedValue,
+                            (string)cboModel.SelectedValue,
+                            (rdoCotxe.IsChecked == true) ? EnumTipus.COTXE : EnumTipus.MOTO
+                        );
+                    vehicles.Add(nou);
+                    indexVehicleActual = vehicles.Count - 1;
+                    modeActual = ModeEdicio.MODE_EDIT;
+                } 
+                else if (modeActual == ModeEdicio.MODE_EDIT)
                 {
-                    actual.Tipus = EnumTipus.MOTO;
+                    // Cerquem el vehicle actual
+                    Vehicle actual = vehicles[indexVehicleActual];
+                    // modifiquem la matrícula
+                    actual.Matricula = txbMatricula.Text;
+                    // modifiquem el tipus
+                    if (rdoCotxe.IsChecked == true)
+                    {
+                        actual.Tipus = EnumTipus.COTXE;
+                    }
+                    else
+                    {
+                        actual.Tipus = EnumTipus.MOTO;
+                    }
+                    //actual.Tipus = (rdoCotxe.IsChecked == true) ? EnumTipus.COTXE : EnumTipus.MOTO;
+                    Marca m = (Marca)cboMarca.SelectedItem;
+                    actual.Marca = m.Nom;
+
+                    actual.Model = cboModel.SelectedValue.ToString();
+
+                    //actual.Marca = cboMarca.SelectedValue.ToString();
                 }
-                //actual.Tipus = (rdoCotxe.IsChecked == true) ? EnumTipus.COTXE : EnumTipus.MOTO;
-                Marca m = (Marca)cboMarca.SelectedItem;
-                actual.Marca = m.Nom;
-
-                actual.Model = cboModel.SelectedValue.ToString();
-
-                //actual.Marca = cboMarca.SelectedValue.ToString();
             }
 
 
@@ -191,6 +219,31 @@ namespace _2_classes_i_collecions_uwp
             }
             */
             return esValid;
+        }
+
+        ModeEdicio modeActual = ModeEdicio.MODE_EDIT;
+
+        private void Button_Click_New(object sender, RoutedEventArgs e)
+        {
+            BuidarFormulari();
+            modeActual = ModeEdicio.MODE_NEW;
+        }
+
+        private void BuidarFormulari()
+        {
+            txbMatricula.Text = "";
+            cboMarca.SelectedIndex = -1;
+            cboModel.SelectedIndex = -1;
+            rdoCotxe.IsChecked = true;
+            rdoMoto.IsChecked = false;
+
+            int codiMax = -1;
+            foreach(Vehicle v in vehicles)
+            {
+                if (v.Codi > codiMax) codiMax = v.Codi;
+            }
+            codiMax++;
+            txbCodi.Text = codiMax + "";
         }
     }
 }
