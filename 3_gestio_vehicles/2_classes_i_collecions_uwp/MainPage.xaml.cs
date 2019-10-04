@@ -136,15 +136,61 @@ namespace _2_classes_i_collecions_uwp
 
 
         }
+        private bool MostraError(bool hiHaError, TextBlock t, bool estatActual)
+        {
+            bool esValid = estatActual;
+            if (hiHaError)
+            {
+                t.Visibility = Visibility.Visible;
+                esValid = false;
+            }
+            else
+            {
+                t.Visibility = Visibility.Collapsed;
+            }
+            return esValid;
+        }
 
         private bool ValidaCamps()
         {
+            bool esValid = true;
 
-            // si (txbMatricula.Text esta malament) 
-            // 
-            txbMatricula.Background = new SolidColorBrush(Colors.Red);
-            return true;
+            esValid = MostraError(cboMarca.SelectedIndex == -1, txbErrorMarca, esValid);
+            esValid = MostraError(cboModel.SelectedIndex == -1, txbErrorModel, esValid);
+            esValid = MostraError(!Vehicle.ValidaMatricula(txbMatricula.Text), txbErrorMatricula, esValid);
 
+            /*if (cboMarca.SelectedIndex==-1)
+            {
+                txbErrorMarca.Visibility = Visibility.Visible;
+                esValid = false;
+            } else
+            {
+                txbErrorMarca.Visibility = Visibility.Collapsed;
+            }
+            //----------------------------------------------------------
+            if (cboModel.SelectedIndex == -1)
+            {
+                txbErrorModel.Visibility = Visibility.Visible;
+                esValid = false;
+            }
+            else
+            {
+                txbErrorModel.Visibility = Visibility.Collapsed;
+            }
+            //----------------------------------------------------------
+
+            if(Vehicle.ValidaMatricula(txbMatricula.Text))
+            {
+                txbErrorMatricula.Visibility = Visibility.Collapsed;
+                txbMatricula.Background = new SolidColorBrush(Colors.Transparent);
+            } else
+            {
+                txbErrorMatricula.Visibility = Visibility.Visible;
+                txbMatricula.Background = new SolidColorBrush(Colors.Red);
+                esValid = false;
+            }
+            */
+            return esValid;
         }
     }
 }

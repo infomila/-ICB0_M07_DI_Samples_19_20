@@ -52,20 +52,33 @@ namespace _2_classes_i_collecions_uwp.model
         public string Matricula {
                             get => matricula;
                             set  {
-                                    if (value == null )
-                                        throw new Exception("MATRICULA NO VÀLIDA");
-     
-                                    // Instantiate the regular expression object.
-                                    Regex r = new Regex("^[0-9]{4}[ZXCVBNMSDFGHJKLQWRTYP]{3}$", RegexOptions.IgnoreCase);
-
-                                    // Match the regular expression pattern against a text string.
-                                    Match m = r.Match(value);
-                                    if(m.Success) { matricula = value; } else
+                                    if(ValidaMatricula(value))
                                     {
-                                        throw new Exception("MATRICULA NO VÀLIDA");
+                                        matricula = value;
+                                    } else
+                                    {
+                                        throw new Exception("Matricula errònia");
                                     }
                             }
         }
+
+
+        public static bool ValidaMatricula(String unaMatricula)
+        {
+            if (unaMatricula == null)  return false;
+     
+            // Instantiate the regular expression object.
+            Regex r = new Regex("^[0-9]{4}[ZXCVBNMSDFGHJKLQWRTYP]{3}$", RegexOptions.IgnoreCase);
+
+            // Match the regular expression pattern against a text string.
+            Match m = r.Match(unaMatricula);
+            if(m.Success) { return true; } else
+            {
+                return false;
+            }            
+        }
+
+
         public string Marca { get => marca; set => marca = value; }
         public string Model { get => model; set => model = value; }
         public EnumTipus Tipus { get => tipus; set => tipus = value; }
