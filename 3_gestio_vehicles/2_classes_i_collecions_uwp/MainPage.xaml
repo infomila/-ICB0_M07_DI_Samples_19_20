@@ -30,6 +30,9 @@
             <Button Content="&lt;" Margin="10" Click="Button_Click_Enrere"></Button>
             <Button Content="New" Click="Button_Click_New"></Button>
             <Button Content="&gt;" Margin="10" Click="Button_Click_Endavant"></Button>
+
+            <Button Content="♻"  Click="Button_Click_Esborrar" Margin="50,0,0,0" FontSize="40"  ></Button>
+
         </StackPanel>
         <TextBlock Text="Codi:" VerticalAlignment="Center"
                    Margin="10"
@@ -47,6 +50,7 @@
                  MinWidth="200" 
                  IsEnabled="true"
                  Margin="10"
+                 TextChanged="txbMatricula_TextChanged"
                  MaxWidth="400" HorizontalAlignment="Left" ></TextBox>
         <TextBlock x:Name="txbErrorMatricula" Grid.Column="2" Grid.Row="2" 
                    Visibility="Collapsed"
@@ -77,6 +81,7 @@
                  Height="200"
                     MinWidth="100" 
                     MaxWidth="200"
+                 SelectionChanged="cboModel_SelectionChanged"
                    Grid.Column="1" Grid.Row="4"></ListBox>
         <TextBlock x:Name="txbErrorModel" Grid.Column="2" Grid.Row="4" 
                    Visibility="Collapsed"
@@ -89,14 +94,14 @@
                     Grid.Column="1" Grid.Row="5"
                     Margin="10"
                     >
-            <RadioButton x:Name="rdoCotxe" IsChecked="True" Content="Cotxe" GroupName="TipusVehicle"></RadioButton>
-            <RadioButton x:Name="rdoMoto" Content="Moto" GroupName="TipusVehicle"></RadioButton>
+            <RadioButton x:Name="rdoCotxe" Checked="rdoCotxe_Checked" Unchecked="rdoCotxe_Checked" IsChecked="True" Content="Cotxe" GroupName="TipusVehicle"></RadioButton>
+            <RadioButton x:Name="rdoMoto" Checked="rdoCotxe_Checked" Unchecked="rdoCotxe_Checked"  Content="Moto" GroupName="TipusVehicle"></RadioButton>
         </StackPanel>
         <StackPanel Orientation="Horizontal" 
                     Grid.Row="6"
                     Grid.ColumnSpan="3"
                     HorizontalAlignment="Center">
-            <Button Content="Cancel" Margin="10"></Button>
+            <Button Content="Cancel" Click="Button_Click" Margin="10"></Button>
             <Button Content="Save" Click="Button_Click_Save"></Button>
         </StackPanel>
     </Grid>

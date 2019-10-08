@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI;
@@ -19,7 +20,7 @@ using Windows.UI.Xaml.Navigation;
 
 namespace _2_classes_i_collecions_uwp
 {
-
+   
 
     enum ModeEdicio
     {
@@ -34,6 +35,8 @@ namespace _2_classes_i_collecions_uwp
     {
         private int indexVehicleActual = 0;
         private List<Vehicle> vehicles;
+        private bool hiHaCanvisPendents = false;
+        private bool eventsDesactivats = false;
 
         public MainPage()
         {
@@ -59,11 +62,35 @@ namespace _2_classes_i_collecions_uwp
         }
         private void MostrarVehicle( int index )
         {
+            DesactivaEvents();
             //List<Vehicle> vehicles = Vehicle.GetVehicles();
-            if(vehicles.Count> index && index>=0)
+            if (vehicles.Count> index && index>=0)
             {
                 MostrarVehicle(vehicles[index]);
             }
+            
+            ActivaEvents();
+            hiHaCanvisPendents = false;
+        }
+
+
+        private void DesactivaEvents()
+        {
+            txbMatricula.TextChanged -= txbMatricula_TextChanged;
+            cboMarca.SelectionChanged -= cboMarca_SelectionChanged;
+            cboModel.SelectionChanged -= cboModel_SelectionChanged;
+            rdoCotxe.Checked -= rdoCotxe_Checked;
+            rdoMoto.Unchecked -= rdoCotxe_Checked;
+            rdoMoto.Checked -= rdoCotxe_Checked;
+        }
+        private void ActivaEvents()
+        {
+            txbMatricula.TextChanged  += txbMatricula_TextChanged;
+            cboMarca.SelectionChanged += cboMarca_SelectionChanged;
+            cboModel.SelectionChanged += cboModel_SelectionChanged;
+            rdoCotxe.Checked  += rdoCotxe_Checked;
+            rdoMoto.Unchecked += rdoCotxe_Checked;
+            rdoMoto.Checked   += rdoCotxe_Checked;
         }
 
 
@@ -83,7 +110,7 @@ namespace _2_classes_i_collecions_uwp
             string marca = v.Marca;
             cboMarca.SelectedValuePath = "Nom";
             cboMarca.SelectedValue = marca;
-
+            cboMarca_SelectionChanged(null, null);
             cboModel.SelectedValue = v.Model;
         }
 
@@ -100,24 +127,62 @@ namespace _2_classes_i_collecions_uwp
             {
                 cboModel.ItemsSource = null;
             }
-
+            hiHaCanvisPendents = true;
         }
 
-        private void Button_Click_Endavant(object sender, RoutedEventArgs e)
+        private async void Button_Click_Endavant(object sender, RoutedEventArgs e)
         {
-            this.indexVehicleActual = (this.indexVehicleActual + 1) % vehicles.Count;
-            MostrarVehicle(indexVehicleActual);
+             
+            if (await verificaCanvisPendentsAsync())
+            {
+                this.indexVehicleActual = (this.indexVehicleActual + 1) % vehicles.Count;
+                MostrarVehicle(indexVehicleActual);
+            }
         }
 
-        private void Button_Click_Enrere
+
+        private async System.Threading.Tasks.Task<bool> verificaCanvisPendentsAsync()
+        {
+            if (!hiHaCanvisPendents) return true;
+
+            ContentDialog confirmaFileDialog = new ContentDialog
+            {
+                Title = "Atenció !",
+                Content = "Hi ha canvis pendents, vol descartar canvis?",
+                PrimaryButtonText = "Descartar",
+                CloseButtonText = "Cancel·lar"
+            };
+
+            ContentDialogResult result = await confirmaFileDialog.ShowAsync();
+
+            // Delete the file if the user clicked the primary button.
+            /// Otherwise, do nothing.
+            if (result == ContentDialogResult.Primary)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+
+
+
+        private async void Button_Click_Enrere
             (object sender, RoutedEventArgs e)
         {
-            this.indexVehicleActual--;
-            if (this.indexVehicleActual < 0)
+            if (await verificaCanvisPendentsAsync())
             {
-                this.indexVehicleActual = vehicles.Count - 1;
+
+                this.indexVehicleActual--;
+                if (this.indexVehicleActual < 0)
+                {
+                    this.indexVehicleActual = vehicles.Count - 1;
+                }
+                MostrarVehicle(indexVehicleActual);
             }
-            MostrarVehicle(indexVehicleActual);
         }
 
         private void Button_Click_Save(object sender, RoutedEventArgs e)
@@ -160,6 +225,8 @@ namespace _2_classes_i_collecions_uwp
 
                     //actual.Marca = cboMarca.SelectedValue.ToString();
                 }
+                // canvis desats, per tant no hi ha canvis pendents
+                hiHaCanvisPendents = false;
             }
 
 
@@ -244,6 +311,39 @@ namespace _2_classes_i_collecions_uwp
             }
             codiMax++;
             txbCodi.Text = codiMax + "";
+        }
+
+        private async void Button_Click_Esborrar(object sender, RoutedEventArgs e)
+        {
+            if (await verificaCanvisPendentsAsync())
+            {
+                //vehicles.Remove(vehicles[indexVehicleActual]);
+                vehicles.RemoveAt(indexVehicleActual);
+                if (indexVehicleActual >= vehicles.Count) indexVehicleActual--;
+                MostrarVehicle(indexVehicleActual);
+            }
+
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            MostrarVehicle(indexVehicleActual);
+            hiHaCanvisPendents = false;
+        }
+
+        private void txbMatricula_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            hiHaCanvisPendents = true;
+        }
+
+        private void cboModel_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            hiHaCanvisPendents = true;
+        }
+
+        private void rdoCotxe_Checked(object sender, RoutedEventArgs e)
+        {
+            hiHaCanvisPendents = true;
         }
     }
 }
