@@ -7,12 +7,58 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Loaded="Page_Loaded"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Height="734.6" Width="736.6">
+    <Page.Resources>
+        <DataTemplate x:Key="ComboBoxItemTemplate1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Image Source="{Binding Icona}" Height="30" Grid.Column="0" VerticalAlignment="Center"></Image>
+                <TextBlock Text="{Binding Nom}" Grid.Column="1"  VerticalAlignment="Center"></TextBlock>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="ListViewItemTemplate1">
+            <Border Height="100" BorderBrush="Black" BorderThickness="3" >
+                <Grid Background="Beige">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="40"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="40"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Image Source="{Binding Marca.Icona}" Grid.Column="0" Grid.Row="0"></Image>
+                    <TextBlock Text="{Binding Codi}"  Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"></TextBlock>
+                    <Image Source="Assets/seat.png" Grid.Column="2" Grid.Row="1"></Image>
+                    <StackPanel Orientation="Horizontal"  Grid.Column="1" Grid.Row="0" Padding="5">
+                        <TextBlock Text="{Binding Marca.Nom}"></TextBlock>
+                        <TextBlock>/</TextBlock>
+                        <TextBlock Text="{Binding Model}"></TextBlock>
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </DataTemplate>
+    </Page.Resources>
 
     <Grid>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        
+
+        <ListView ItemTemplate="{StaticResource ListViewItemTemplate1}" x:Name="lsvVehicles" Grid.Column="0"></ListView>    
+        <Grid Grid.Column="1">
+        <Grid.ColumnDefinitions>
             <ColumnDefinition Width="80"></ColumnDefinition>
-            <ColumnDefinition Width="auto"></ColumnDefinition>
+            <ColumnDefinition Width="*" MinWidth="250"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -45,7 +91,7 @@
         <TextBlock Text="Matricula:" VerticalAlignment="Center"
                    Margin="10"
                    Grid.Column="0" Grid.Row="2" ></TextBlock>
-        
+
         <TextBox x:Name="txbMatricula" Grid.Column="1" Grid.Row="2" 
                  MinWidth="200" 
                  IsEnabled="true"
@@ -55,7 +101,7 @@
         <TextBlock x:Name="txbErrorMatricula" Grid.Column="2" Grid.Row="2" 
                    Visibility="Collapsed"
                    Text="Matricula errònia" VerticalAlignment="Center"></TextBlock>
-        
+
         <TextBlock Text="Marca:" VerticalAlignment="Center"
                    Margin="10"
                    Grid.Column="0" Grid.Row="3" ></TextBlock>
@@ -64,14 +110,14 @@
                    Visibility="Collapsed"
                    Text="Marca obligatòria" VerticalAlignment="Center"></TextBlock>
 
-        <ComboBox x:Name="cboMarca" VerticalAlignment="Center"
+        <ComboBox ItemTemplate="{StaticResource ComboBoxItemTemplate1}" x:Name="cboMarca" VerticalAlignment="Center"
                     Margin="10"
                     MinWidth="200" 
-                    MaxWidth="400"
+                    MaxWidth="400"                  
                   SelectionChanged="cboMarca_SelectionChanged"
                    Grid.Column="1" Grid.Row="3"></ComboBox>
-        
-        
+
+
         <TextBlock Text="Model:" VerticalAlignment="Center"
                    Margin="10"
                    Grid.Column="0" Grid.Row="4" ></TextBlock>
@@ -105,4 +151,8 @@
             <Button Content="Save" Click="Button_Click_Save"></Button>
         </StackPanel>
     </Grid>
+
+    </Grid>
+
+
 </Page>

@@ -18,9 +18,9 @@ namespace _2_classes_i_collecions_uwp.model
             if (vehicles == null)
             {
                 vehicles = new List<Vehicle>();
-                Vehicle v1 = new Vehicle(1, "1234JKJ", "Seat", "Leon", EnumTipus.COTXE);
-                Vehicle v2 = new Vehicle(20, "9999GGG", "Seat", "Exeo", EnumTipus.COTXE);
-                Vehicle v3 = new Vehicle(3, "3333JJJ", "Volkswagen", "Golf", EnumTipus.COTXE);
+                Vehicle v1 = new Vehicle(1, "1234JKJ", _2_classes_i_collecions_uwp.model.Marca.GetMarques()[0], "Leon", EnumTipus.COTXE);
+                Vehicle v2 = new Vehicle(20, "9999GGG", _2_classes_i_collecions_uwp.model.Marca.GetMarques()[0], "Exeo", EnumTipus.COTXE);
+                Vehicle v3 = new Vehicle(3, "3333JJJ", _2_classes_i_collecions_uwp.model.Marca.GetMarques()[1], "Golf", EnumTipus.COTXE);
                 vehicles.Add(v1);
                 vehicles.Add(v2);
                 vehicles.Add(v3);
@@ -37,15 +37,16 @@ namespace _2_classes_i_collecions_uwp.model
 
         private int codi;
         private string matricula;
-        private string marca;
+        //private string marca;
+        private Marca marca;
         private string model;
         private EnumTipus tipus;
 
-        public Vehicle(int codi, string matricula, string marca, string model, EnumTipus tipus)
+        public Vehicle(int codi, string matricula, Marca marca, string model, EnumTipus tipus)
         {
             this.Codi = codi;
             this.Matricula = matricula;
-            this.Marca = marca;
+            this.marca = marca;
             this.Model = model;
             this.Tipus = tipus;
         }
@@ -91,7 +92,7 @@ namespace _2_classes_i_collecions_uwp.model
                    Tipus == vehicle.Tipus;
         }
 
-        public string Marca { get => marca; set => marca = value; }
+        public _2_classes_i_collecions_uwp.model.Marca Marca { get => marca;  set => marca = value; }
         public string Model { get => model; set => model = value; }
         public EnumTipus Tipus { get => tipus; set => tipus = value; }
 

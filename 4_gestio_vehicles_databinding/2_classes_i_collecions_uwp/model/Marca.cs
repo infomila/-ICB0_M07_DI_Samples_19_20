@@ -17,13 +17,13 @@ namespace _2_classes_i_collecions_uwp.model
             {
                 marques = new List<Marca>();
                 //-------------------------------
-                Marca seat = new Marca("Seat");
+                Marca seat = new Marca("Seat", "Assets/seat.png");
                 seat.models.Add("Leon");
                 seat.models.Add("Tarraco");
                 seat.models.Add("Exeo");
                 marques.Add(seat);
                 //-------------------------------
-                Marca volkswagen = new Marca("Volkswagen");
+                Marca volkswagen = new Marca("Volkswagen", "Assets/vw.png");
                 volkswagen.models.Add("Golf");
                 volkswagen.models.Add("Touran");
                 volkswagen.models.Add("California");
@@ -34,11 +34,13 @@ namespace _2_classes_i_collecions_uwp.model
 
         //---------------------------------------------
         private string nom;
+        private string icona;
         private List<string> models;
         //---------------------------------------------
-        public Marca(string pNom)
+        public Marca(string pNom, string pIcona)
         {
             nom = pNom;
+            Icona = pIcona;
             models = new List<string>();
         }
 
@@ -47,6 +49,7 @@ namespace _2_classes_i_collecions_uwp.model
         public List<string> Models {
             get => models;
             }
+        public string Icona { get => icona; set => icona = value; }
         //---------------------------------------------
 
     }

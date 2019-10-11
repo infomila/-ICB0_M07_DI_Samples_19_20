@@ -51,10 +51,13 @@ namespace _2_classes_i_collecions_uwp
             vehicles = Vehicle.GetVehicles();
 
 
+
+            lsvVehicles.ItemsSource = vehicles;
+
             //----------------------------------------------------
             // Carreguem el combobox de marques
             cboMarca.ItemsSource = Marca.GetMarques();
-            cboMarca.DisplayMemberPath = "Nom";
+            //cboMarca.DisplayMemberPath = "Nom";
 
             //----------------------------------------------------
             // Mostrem el vehicle actual ( inicialment serà zero )
@@ -106,9 +109,9 @@ namespace _2_classes_i_collecions_uwp
                 rdoMoto.IsChecked = true;
             }
             //----------------------------------------
-            string marca = v.Marca;
-            cboMarca.SelectedValuePath = "Nom";
-            cboMarca.SelectedValue = marca;
+            
+            //cboMarca.SelectedValuePath = "Nom";
+            cboMarca.SelectedItem = v.Marca;
             cboMarca_SelectionChanged(null, null);
             cboModel.SelectedValue = v.Model;
         }
@@ -149,7 +152,7 @@ namespace _2_classes_i_collecions_uwp
                 Vehicle modificat = new Vehicle(
                     Int32.Parse(txbCodi.Text),
                     txbMatricula.Text,
-                    (string)cboMarca.SelectedValue,
+                    (Marca)cboMarca.SelectedValue,
                     (string)cboModel.SelectedValue,
                     (rdoCotxe.IsChecked == true) ? EnumTipus.COTXE : EnumTipus.MOTO
                 );
@@ -210,7 +213,7 @@ namespace _2_classes_i_collecions_uwp
                     Vehicle nou = new Vehicle(
                             Int32.Parse( txbCodi.Text ),
                             txbMatricula.Text,
-                            (string)cboMarca.SelectedValue,
+                            (Marca)cboMarca.SelectedValue,
                             (string)cboModel.SelectedValue,
                             (rdoCotxe.IsChecked == true) ? EnumTipus.COTXE : EnumTipus.MOTO
                         );
@@ -235,7 +238,7 @@ namespace _2_classes_i_collecions_uwp
                     }
                     //actual.Tipus = (rdoCotxe.IsChecked == true) ? EnumTipus.COTXE : EnumTipus.MOTO;
                     Marca m = (Marca)cboMarca.SelectedItem;
-                    actual.Marca = m.Nom;
+                    actual.Marca = m;
 
                     actual.Model = cboModel.SelectedValue.ToString();
 
