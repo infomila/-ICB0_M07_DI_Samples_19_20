@@ -36,7 +36,7 @@
                     </Grid.RowDefinitions>
                     <Image Source="{Binding Marca.Icona}" Grid.Column="0" Grid.Row="0"></Image>
                     <TextBlock Text="{Binding Codi}"  Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"></TextBlock>
-                    <Image Source="Assets/seat.png" Grid.Column="2" Grid.Row="1"></Image>
+                    <TextBlock Text="{Binding TipusEmoji}" Grid.Column="2" Grid.Row="1" FontSize="40"  ></TextBlock>
                     <StackPanel Orientation="Horizontal"  Grid.Column="1" Grid.Row="0" Padding="5">
                         <TextBlock Text="{Binding Marca.Nom}"></TextBlock>
                         <TextBlock>/</TextBlock>

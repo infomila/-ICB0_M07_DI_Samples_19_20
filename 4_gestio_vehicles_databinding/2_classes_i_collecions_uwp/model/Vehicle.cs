@@ -19,7 +19,7 @@ namespace _2_classes_i_collecions_uwp.model
             {
                 vehicles = new List<Vehicle>();
                 Vehicle v1 = new Vehicle(1, "1234JKJ", _2_classes_i_collecions_uwp.model.Marca.GetMarques()[0], "Leon", EnumTipus.COTXE);
-                Vehicle v2 = new Vehicle(20, "9999GGG", _2_classes_i_collecions_uwp.model.Marca.GetMarques()[0], "Exeo", EnumTipus.COTXE);
+                Vehicle v2 = new Vehicle(20, "9999GGG", _2_classes_i_collecions_uwp.model.Marca.GetMarques()[0], "Exeo", EnumTipus.MOTO);
                 Vehicle v3 = new Vehicle(3, "3333JJJ", _2_classes_i_collecions_uwp.model.Marca.GetMarques()[1], "Golf", EnumTipus.COTXE);
                 vehicles.Add(v1);
                 vehicles.Add(v2);
@@ -97,7 +97,13 @@ namespace _2_classes_i_collecions_uwp.model
         public EnumTipus Tipus { get => tipus; set => tipus = value; }
 
 
-         
+         public string TipusEmoji {  get
+            {
+                if (Tipus == EnumTipus.COTXE) return "🚗";
+                else return "🛵";
+
+            }
+        }
 
 
         /*
