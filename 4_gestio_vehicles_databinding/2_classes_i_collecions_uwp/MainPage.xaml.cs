@@ -1,6 +1,7 @@
 ﻿using _2_classes_i_collecions_uwp.model;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -34,7 +35,7 @@ namespace _2_classes_i_collecions_uwp
     public sealed partial class MainPage : Page
     {
         private int indexVehicleActual = 0;
-        private List<Vehicle> vehicles;
+        private ObservableCollection<Vehicle> vehicles;
 
 
 

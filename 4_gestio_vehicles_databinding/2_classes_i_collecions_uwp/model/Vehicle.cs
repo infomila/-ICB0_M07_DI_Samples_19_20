@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -9,15 +11,17 @@ namespace _2_classes_i_collecions_uwp.model
 {
     
 
-    class Vehicle
+    class Vehicle : INotifyPropertyChanged
     {
-        private static List<Vehicle> vehicles;
+        public event PropertyChangedEventHandler PropertyChanged; //INotifyPropertyChanged
 
-        public static List<Vehicle> GetVehicles()
+        private static ObservableCollection<Vehicle> vehicles;
+
+        public static ObservableCollection<Vehicle> GetVehicles()
         {
             if (vehicles == null)
             {
-                vehicles = new List<Vehicle>();
+                vehicles = new ObservableCollection<Vehicle>();
                 Vehicle v1 = new Vehicle(1, "1234JKJ", _2_classes_i_collecions_uwp.model.Marca.GetMarques()[0], "Leon", EnumTipus.COTXE);
                 Vehicle v2 = new Vehicle(20, "9999GGG", _2_classes_i_collecions_uwp.model.Marca.GetMarques()[0], "Exeo", EnumTipus.MOTO);
                 Vehicle v3 = new Vehicle(3, "3333JJJ", _2_classes_i_collecions_uwp.model.Marca.GetMarques()[1], "Golf", EnumTipus.COTXE);
@@ -42,6 +46,7 @@ namespace _2_classes_i_collecions_uwp.model
         private string model;
         private EnumTipus tipus;
 
+
         public Vehicle(int codi, string matricula, Marca marca, string model, EnumTipus tipus)
         {
             this.Codi = codi;
@@ -58,6 +63,7 @@ namespace _2_classes_i_collecions_uwp.model
                                     if(ValidaMatricula(value))
                                     {
                                         matricula = value;
+                                        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Matricula"));
                                     } else
                                     {
                                         throw new Exception("Matricula errònia");
