@@ -22,9 +22,9 @@ namespace _5_Creacio_Dinamica
     /// <summary>
     /// Página vacía que se puede usar de forma independiente o a la que se puede navegar dentro de un objeto Frame.
     /// </summary>
-    public sealed partial class MainPage : Page
+    public sealed partial class EdicioLlistaTelefons : Page
     {
-        public MainPage()
+        public EdicioLlistaTelefons()
         {
             this.InitializeComponent();
 
@@ -93,6 +93,18 @@ namespace _5_Creacio_Dinamica
                 t.Background = new SolidColorBrush(Colors.Red);
             }
 
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+            List<string> telefonsTmp = new List<string>();
+            foreach (TextBox t in staTelefons.Children)
+            {
+                telefonsTmp.Add(t.Text);
+            }
+            
+            this.Frame.Navigate(typeof(LlistaTelefons), telefonsTmp);
         }
     }
 }
