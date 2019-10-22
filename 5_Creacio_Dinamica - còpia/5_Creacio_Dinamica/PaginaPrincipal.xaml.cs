@@ -20,30 +20,33 @@ namespace _5_Creacio_Dinamica
     /// <summary>
     /// Una página vacía que se puede usar de forma independiente o a la que se puede navegar dentro de un objeto Frame.
     /// </summary>
-    public sealed partial class LlistaTelefons : Page
+    public sealed partial class PaginaPrincipal : Page
     {
-        public LlistaTelefons()
+
+        List<string> numeros = new List<string>();
+
+        public PaginaPrincipal()
         {
             this.InitializeComponent();
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        private void NavigationView_ItemInvoked(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewItemInvokedEventArgs args)
         {
-            List<string> telefons = (List<string>) e.Parameter;
-            if (telefons != null)
+            if(args.InvokedItem.Equals( nviView.Tag))
             {
-                foreach (string t in telefons)
-                {
-                    txbLlistaTelefons.Text += (t + "\n");
-                }
+                frmPrincipal.Navigate(typeof(LlistaTelefons), numeros);
+            } else
+            {
+                frmPrincipal.Navigate(typeof(EdicioLlistaTelefons), numeros);
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void NavigationView_BackRequested(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewBackRequestedEventArgs args)
         {
-            //this.Frame.GoBack();
-            this.Frame.Navigate(typeof (EdicioLlistaTelefons));
+            if (frmPrincipal.CanGoBack)
+            {
+                frmPrincipal.GoBack();
+            }
         }
     }
-    
 }

@@ -24,8 +24,6 @@ namespace _5_Creacio_Dinamica
     /// </summary>
     public sealed partial class EdicioLlistaTelefons : Page
     {
-        private List<string> telefons;
-
         public EdicioLlistaTelefons()
         {
             this.InitializeComponent();
@@ -41,18 +39,33 @@ namespace _5_Creacio_Dinamica
 
         private void cboQuantitatTelefons_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
             int q = (int)cboQuantitatTelefons.SelectedItem;
-            //<TextBox Text="646232232" Padding="10" Margin="10"> </TextBox>
-
+            updatePhones(q);
             telefons.Clear();
             foreach (TextBox t in staTelefons.Children)
             {
                 telefons.Add(t.Text);
             }
+        }
+        private void updatePhones(int q) { 
+
+ 
+
             staTelefons.Children.Clear();
 
-            MostrarTextBoxes(q);
+            for (int i = 0; i < q; i++) {
+                TextBox t = new TextBox();
+                if (i < telefons.Count)
+                {
+                    t.Text = telefons[i];
+                }
+                t.Padding = new Thickness(10);
+                t.Margin = new Thickness(10);
+
+                t.TextChanged += T_TextChanged;
+
+                staTelefons.Children.Add(t);
+            }
 
 
             /*
@@ -70,24 +83,6 @@ namespace _5_Creacio_Dinamica
 
         }
 
-        private void MostrarTextBoxes(int q)
-        {
-            for (int i = 0; i < q; i++)
-            {
-                TextBox t = new TextBox();
-                if (i < telefons.Count)
-                {
-                    t.Text = telefons[i];
-                }
-                t.Padding = new Thickness(10);
-                t.Margin = new Thickness(10);
-
-                t.TextChanged += T_TextChanged;
-
-                staTelefons.Children.Add(t);
-            }
-        }
-
         private void T_TextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox t = (TextBox)sender;
@@ -103,20 +98,18 @@ namespace _5_Creacio_Dinamica
 
         }
 
-
-
-
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
-            telefons = (List<string>)e.Parameter;
-            if(telefons!=null)
-            {
-                MostrarTextBoxes(telefons.Count);
-            }
 
+            List<string> telefonsTmp = new List<string>();
+            foreach (TextBox t in staTelefons.Children)
+            {
+                telefonsTmp.Add(t.Text);
+            }
+            
+            this.Frame.Navigate(typeof(LlistaTelefons), telefonsTmp);
         }
-        // Aquest event salta quan estem a punt de marxar de la
-        // pàgina per què estem navegant cap a una altra
+
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             telefons.Clear();
@@ -124,10 +117,16 @@ namespace _5_Creacio_Dinamica
             {
                 telefons.Add(t.Text);
             }
-
         }
 
+        private List<string> telefons;
 
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            telefons = (List<string>)e.Parameter;
+            updatePhones(telefons.Count);
+ 
+        }
 
     }
 }

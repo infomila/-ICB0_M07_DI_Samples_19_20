@@ -9,6 +9,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <StackPanel Orientation="Horizontal" Name="staTelefonsBloc">
+        <Button Content="Anar a la llista" Click="Button_Click"></Button>
         <ComboBox x:Name="cboQuantitatTelefons" SelectionChanged="cboQuantitatTelefons_SelectionChanged"></ComboBox>
         <StackPanel x:Name="staTelefons" Orientation="Vertical">
             <!--TextBox  Text="646232232" Padding="10" Margin="10"> </>

@@ -22,9 +22,44 @@ namespace _5_Creacio_Dinamica
     /// </summary>
     public sealed partial class PaginaPrincipal : Page
     {
+
+        private List<String> telefons = new List<String>();
+
+
+
         public PaginaPrincipal()
         {
             this.InitializeComponent();
+
+            telefons.Add("93 345 34 34 34");
+            telefons.Add("93 567 78 78 78");
+        }
+
+        private void NavigationView_ItemInvoked(Microsoft.UI.Xaml.Controls.NavigationView sender, 
+                Microsoft.UI.Xaml.Controls.NavigationViewItemInvokedEventArgs args)
+        {
+
+            /*
+             * Dictionary<string, Type> pagines = new Dictionary<string, Type>();
+            pagines.Add("View", typeof(LlistaTelefons));
+            pagines.Add("Edit", typeof(EdicioLlistaTelefons));
+            //pagines.Add("Edit", typeof(EdicioLlistaTelefons));
+            
+            frmPrincipal.Navigate(pagines[args.InvokedItem.ToString()], telefons);*/
+
+            if (args.InvokedItem.Equals("View"))
+            {
+                frmPrincipal.Navigate(typeof(LlistaTelefons), telefons);
+            } else
+            {
+                frmPrincipal.Navigate(typeof(EdicioLlistaTelefons), telefons);
+            }
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            nvwMenu.SelectedItem = mviEdit;
+            frmPrincipal.Navigate(typeof(EdicioLlistaTelefons), telefons);
         }
     }
 }

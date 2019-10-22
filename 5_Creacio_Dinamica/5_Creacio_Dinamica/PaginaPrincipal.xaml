@@ -5,15 +5,22 @@
     xmlns:local="using:_5_Creacio_Dinamica"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    Loaded="Page_Loaded">
 
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        <NavigationView Grid.Row="0"  ></NavigationView>
+        <controls:NavigationView x:Name="nvwMenu" ItemInvoked="NavigationView_ItemInvoked"  PaneDisplayMode="Top" Grid.Row="0" IsSettingsVisible="False" >
+            <controls:NavigationView.MenuItems>
+                <controls:NavigationViewItem Icon="View" Content="View" Tag="View"/>
+                <controls:NavigationViewItem x:Name="mviEdit" Icon="Edit" Content="Edit" Tag="Edit"/>
+            </controls:NavigationView.MenuItems>
+        </controls:NavigationView>
         <Frame Grid.Row="1" x:Name="frmPrincipal"></Frame>
     </Grid>
 </Page>
