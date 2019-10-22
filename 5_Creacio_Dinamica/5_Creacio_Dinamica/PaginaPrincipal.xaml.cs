@@ -61,5 +61,10 @@ namespace _5_Creacio_Dinamica
             nvwMenu.SelectedItem = mviEdit;
             frmPrincipal.Navigate(typeof(EdicioLlistaTelefons), telefons);
         }
+
+        private void nvwMenu_BackRequested(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewBackRequestedEventArgs args)
+        {
+            frmPrincipal.GoBack();
+        }
     }
 }

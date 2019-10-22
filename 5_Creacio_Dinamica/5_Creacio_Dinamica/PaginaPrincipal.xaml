@@ -11,16 +11,23 @@
     Loaded="Page_Loaded">
 
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
-        </Grid.RowDefinitions>
-        <controls:NavigationView x:Name="nvwMenu" ItemInvoked="NavigationView_ItemInvoked"  PaneDisplayMode="Top" Grid.Row="0" IsSettingsVisible="False" >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <controls:NavigationView x:Name="nvwMenu" 
+                                 BackRequested="nvwMenu_BackRequested"
+                                 IsBackEnabled="{x:Bind frmPrincipal.CanGoBack, Mode=OneWay}"
+                                 ItemInvoked="NavigationView_ItemInvoked"  
+                                 PaneDisplayMode="Left" Grid.Row="0" IsSettingsVisible="False" >
             <controls:NavigationView.MenuItems>
+                <controls:NavigationViewItemHeader>Emails</controls:NavigationViewItemHeader>
+                <controls:NavigationViewItemSeparator/>
                 <controls:NavigationViewItem Icon="View" Content="View" Tag="View"/>
                 <controls:NavigationViewItem x:Name="mviEdit" Icon="Edit" Content="Edit" Tag="Edit"/>
+                <controls:NavigationViewItemSeparator/>
             </controls:NavigationView.MenuItems>
         </controls:NavigationView>
-        <Frame Grid.Row="1" x:Name="frmPrincipal"></Frame>
+        <Frame Grid.Column="1" x:Name="frmPrincipal"></Frame>
     </Grid>
 </Page>
