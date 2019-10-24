@@ -13,8 +13,13 @@
     Loaded="UserControl_Loaded"
              
     >
-    <TextBox x:Name="txbNumero" HorizontalAlignment="Stretch" 
+    <!--TextBox x:Name="txbNumero" HorizontalAlignment="Stretch" 
              KeyDown="txbNumero_KeyDown"
              Text="{Binding ElementName=NumericTextBox, Path=Text,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
-             VerticalAlignment="Center"></TextBox>
+             VerticalAlignment="Center"></TextBox-->
+    <TextBox x:Name="txbNumero" HorizontalAlignment="Stretch" 
+             KeyDown="txbNumero_KeyDown"      
+             TextChanged="txbNumero_TextChanged"
+             VerticalAlignment="Center">
+    </TextBox>
 </UserControl>

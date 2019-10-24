@@ -39,7 +39,7 @@ namespace _6_Controls_Personalitzats
         //  - Indicar el nom de la classe on estem ( NumericTextbox)
         //  - Indicar el valor per defecte ( dins de new PropertyMetadata() )
         #region Properties
-        public string Text
+        /*public string Text
         {
             get { return (string)GetValue(TextProperty); }
             set { SetValue(TextProperty, value); }
@@ -49,18 +49,42 @@ namespace _6_Controls_Personalitzats
         public static readonly DependencyProperty TextProperty =
             DependencyProperty.Register("Text", typeof(string), 
                 typeof(NumericTextbox),
-                new PropertyMetadata("0"));
+                new PropertyMetadata("0", TextChangedCallback));
+
+        private static void TextChangedCallback(DependencyObject d, 
+            DependencyPropertyChangedEventArgs e)
+        {
+
+
+        }*/
+
+    
 
         public int Valor
         {
             get { return (int)GetValue(ValorProperty); }
-            set { SetValue(ValorProperty, value); }
+            set {
+                SetValue(ValorProperty, value);
+            }
         }
 
         // Using a DependencyProperty as the backing store for Valor.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ValorProperty =
             DependencyProperty.Register("Valor", typeof(int), typeof(NumericTextbox), 
-                new PropertyMetadata(0));
+                new PropertyMetadata(0, ValorChangedCallback));
+
+
+        //Quan salta ValorChangedCallback vol dir que estan canviant la propietat "Valor"
+        private static void ValorChangedCallback(DependencyObject d, 
+            DependencyPropertyChangedEventArgs e)
+        {            
+            // SEMPRE s'agafa el primer paràmetre (DependencyObject) i es "casteja"
+            //       a el tipus de dades de 
+            NumericTextbox nt = (NumericTextbox)d;
+
+            // Fem servir l'objecte castejat per accedir  als camps de control.
+            nt.txbNumero.Text = e.NewValue+"";
+        }
 
 
         #endregion
@@ -71,6 +95,19 @@ namespace _6_Controls_Personalitzats
                 e.Key <= Windows.System.VirtualKey.Number9 ))
             {
                 e.Handled = true;
+            }
+        }
+
+        private void txbNumero_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                Valor = Int32.Parse(txbNumero.Text);
+            }
+            catch (Exception)
+            {
+                Valor = 0;
+                txbNumero.Text = "0";
             }
         }
     }

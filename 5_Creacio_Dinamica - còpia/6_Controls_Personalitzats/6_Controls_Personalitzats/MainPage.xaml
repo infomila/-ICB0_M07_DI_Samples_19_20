@@ -8,7 +8,9 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
-        <local:NumericTextbox Text="123"></local:NumericTextbox>
-    </Grid>
+    <StackPanel>
+        <local:NumericTextbox Valor="733" x:Name="ntbNumero"></local:NumericTextbox>
+        <Button Click="Button_Click">X</Button>
+        <TextBlock x:Name="txbValor"></TextBlock>
+    </StackPanel>
 </Page>

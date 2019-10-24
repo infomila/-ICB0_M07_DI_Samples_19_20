@@ -26,5 +26,10 @@ namespace _6_Controls_Personalitzats
         {
             this.InitializeComponent();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            txbValor.Text = ntbNumero.Valor+"";
+        }
     }
 }
