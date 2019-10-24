@@ -29,5 +29,19 @@
             </controls:NavigationView.MenuItems>
         </controls:NavigationView>
         <Frame Grid.Column="1" x:Name="frmPrincipal"></Frame>
+
+        <controls:ColorPicker IsAlphaSliderVisible="False"
+                              IsAlphaTextInputVisible="False"
+                              IsColorChannelTextInputVisible="False"
+                              IsColorSliderVisible="False"
+                              IsColorPreviewVisible="False"
+                              IsColorSpectrumVisible="true" 
+                              IsHexInputVisible="False"
+                               HorizontalAlignment="Center" Margin="0,300,0,0" VerticalAlignment="Top"
+                              >
+            <controls:ColorPicker.RenderTransform>
+                <ScaleTransform ScaleX="0.2" ScaleY="0.2"></ScaleTransform>
+            </controls:ColorPicker.RenderTransform>
+        </controls:ColorPicker>
     </Grid>
 </Page>
