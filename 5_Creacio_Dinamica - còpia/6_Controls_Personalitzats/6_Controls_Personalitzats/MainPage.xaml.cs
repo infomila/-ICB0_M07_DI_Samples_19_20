@@ -31,5 +31,11 @@ namespace _6_Controls_Personalitzats
         {
             txbValor.Text = ntbNumero.Valor+"";
         }
+
+        private void NumericUpDownTextbox_ValorChanged(object sender, EventArgs e)
+        {
+            if(txbValorActual!=null)
+            txbValorActual.Text = nudNum.Valor + "";
+        }
     }
 }

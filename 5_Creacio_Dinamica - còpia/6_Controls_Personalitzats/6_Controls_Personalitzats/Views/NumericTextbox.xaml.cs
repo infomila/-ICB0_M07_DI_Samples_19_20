@@ -15,10 +15,15 @@ using Windows.UI.Xaml.Navigation;
 
 // La plantilla de elemento Control de usuario está documentada en https://go.microsoft.com/fwlink/?LinkId=234236
 
-namespace _6_Controls_Personalitzats
+namespace _6_Controls_Personalitzats.Views
 {
     public sealed partial class NumericTextbox : UserControl
     {
+        // Això és un event que estem declarant per a que la resta de controls
+        // puguin saber si hi ha hagut un canvi 
+        public event EventHandler ValorChanged;
+
+
         public NumericTextbox()
         {
             this.InitializeComponent();
@@ -27,7 +32,10 @@ namespace _6_Controls_Personalitzats
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
 
+            
         }
+ 
+
         //---------------------------------
         // Dependency Properties
         //---------------------------------
@@ -58,7 +66,7 @@ namespace _6_Controls_Personalitzats
 
         }*/
 
-    
+
 
         public int Valor
         {
@@ -84,6 +92,9 @@ namespace _6_Controls_Personalitzats
 
             // Fem servir l'objecte castejat per accedir  als camps de control.
             nt.txbNumero.Text = e.NewValue+"";
+
+
+            nt.ValorChanged?.Invoke(nt, new EventArgs());
         }
 
 

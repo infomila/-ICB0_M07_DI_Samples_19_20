@@ -1,6 +1,6 @@
 ﻿<UserControl 
     x:Name="NumericTextBox"
-    x:Class="_6_Controls_Personalitzats.NumericTextbox"
+    x:Class="_6_Controls_Personalitzats.Views.NumericTextbox"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:_6_Controls_Personalitzats"
@@ -20,6 +20,7 @@
     <TextBox x:Name="txbNumero" HorizontalAlignment="Stretch" 
              KeyDown="txbNumero_KeyDown"      
              TextChanged="txbNumero_TextChanged"
+             BorderThickness="0"
              VerticalAlignment="Center">
     </TextBox>
 </UserControl>

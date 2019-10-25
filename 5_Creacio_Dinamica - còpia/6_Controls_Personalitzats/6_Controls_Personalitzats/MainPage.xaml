@@ -3,14 +3,20 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:_6_Controls_Personalitzats"
+    xmlns:views="using:_6_Controls_Personalitzats.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <StackPanel>
-        <local:NumericTextbox Valor="733" x:Name="ntbNumero"></local:NumericTextbox>
+        <views:NumericTextbox Valor="733" x:Name="ntbNumero"></views:NumericTextbox>
         <Button Click="Button_Click">X</Button>
         <TextBlock x:Name="txbValor"></TextBlock>
+        <views:NumericUpDownTextbox   
+            x:Name="nudNum"
+            ValorChanged="NumericUpDownTextbox_ValorChanged"
+            Valor="2" Min="10" Max="2000"></views:NumericUpDownTextbox>
+        <TextBlock x:Name="txbValorActual"></TextBlock>
     </StackPanel>
 </Page>
