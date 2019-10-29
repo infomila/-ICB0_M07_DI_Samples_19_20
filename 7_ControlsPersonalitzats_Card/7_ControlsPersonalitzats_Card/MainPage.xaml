@@ -1,0 +1,37 @@
+﻿<Page
+    x:Class="_7_ControlsPersonalitzats_Card.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:_7_ControlsPersonalitzats_Card"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Loaded="Page_Loaded"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Page.Resources>
+        <!--DataTemplate x:Key="ListViewItemTemplate1">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding Path=Id}"></TextBlock>
+                <TextBlock Text="{Binding Path=Id}"></TextBlock>
+            </StackPanel>
+        </DataTemplate-->
+    </Page.Resources>
+
+    <Grid>
+        <!--local:FitxaPersona x:Name="fitPersona"></-->
+        <!--Button Click="Button_Click">Test</Button-->
+        <ListView   x:Name="lsvFitxes">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <local:FitxaPersona LaPersona="{Binding}"></local:FitxaPersona>
+                    <!--StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Path=Id}"></TextBlock>
+                        <TextBlock Text="{Binding Path=Nom}"></TextBlock>
+                    </StackPanel-->
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        
+        
+    </Grid>
+</Page>
