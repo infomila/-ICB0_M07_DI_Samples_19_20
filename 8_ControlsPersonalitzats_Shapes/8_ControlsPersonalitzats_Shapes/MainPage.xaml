@@ -1,0 +1,15 @@
+﻿<Page
+    x:Class="_8_ControlsPersonalitzats_Shapes.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:_8_ControlsPersonalitzats_Shapes"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:view="using:_8_ControlsPersonalitzats_Shapes.View"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <view:Velocimetre Velocitat="120" Max="200.0"></view:Velocimetre>
+    </Grid>
+</Page>
