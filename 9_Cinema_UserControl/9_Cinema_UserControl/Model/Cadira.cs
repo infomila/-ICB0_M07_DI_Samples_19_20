@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -7,8 +8,11 @@ using System.Threading.Tasks;
 
 namespace _9_Cinema_UserControl.Model
 {
-    public class Cadira
+    public class Cadira: INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+
+
         private long id;
         private Point coord;
         private Categoria cat;
@@ -28,6 +32,16 @@ namespace _9_Cinema_UserControl.Model
         public Point Coord { get => coord; set => coord = value; }
         public Categoria Cat { get => cat; set => cat = value; }
         public long IdGrup { get => idGrup; set => idGrup = value; }
-        internal EnumEstat Estat { get => estat; set => estat = value; }
+        internal EnumEstat Estat
+        {
+            get => estat;
+            set
+            {
+                estat = value;
+                PropertyChanged?.Invoke(this, 
+                    new PropertyChangedEventArgs("Estat"));
+            }
+        }
+
     }
 }

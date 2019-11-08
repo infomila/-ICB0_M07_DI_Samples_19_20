@@ -28,6 +28,13 @@ namespace _9_Cinema_UserControl
             this.InitializeComponent();
 
             Sala s = Sala.CrearSala();
+            s.Cadires[0].Estat = EnumEstat.OCUPADA;
+            uicad1.LaCadira = s.Cadires[0];
+            uicad2.LaCadira = s.Cadires[25];
+            uicad3.LaCadira = s.Cadires[45];
+            uicad4.LaCadira = s.Cadires[65];
         }
+
+    
     }
 }

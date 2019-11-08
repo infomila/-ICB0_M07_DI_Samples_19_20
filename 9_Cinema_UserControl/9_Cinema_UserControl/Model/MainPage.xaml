@@ -5,10 +5,14 @@
     xmlns:local="using:_9_Cinema_UserControl"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:view="using:_9_Cinema_UserControl.View"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
-
-    </Grid>
+    <StackPanel>
+        <view:UICadira Size="30" x:Name="uicad1"></view:UICadira>
+        <view:UICadira Size="30" x:Name="uicad2"></view:UICadira>
+        <view:UICadira Size="30" x:Name="uicad3"></view:UICadira>
+        <view:UICadira Size="30" x:Name="uicad4"></view:UICadira>
+    </StackPanel>
 </Page>
