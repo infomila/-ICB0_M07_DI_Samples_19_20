@@ -6,14 +6,15 @@ namespace AplicacioDM
 {
     public class Emp
     {
-        int empNo ;
-        string cognom ;      
-        string ofici ;
-        int cap ;            
-        DateTime data_alta ;
-        decimal salari ;     
-        decimal comissio ;
-        int deptNo ;
+        public int empNo ;
+        public string cognom ;      
+        public string ofici ;
+        public int cap ;
+        public string nomCap;
+        public DateTime data_alta ;
+        public decimal salari ;     
+        public decimal comissio ;
+        public int deptNo ;
 
 
         public Emp() { }
@@ -38,5 +39,6 @@ namespace AplicacioDM
         public decimal Salari { get => salari; set => salari = value; }
         public decimal Comissio { get => comissio; set => comissio = value; }
         public int DeptNo { get => deptNo; set => deptNo = value; }
+        public string NomCap { get => nomCap; set => nomCap = value; }
     }
 }
