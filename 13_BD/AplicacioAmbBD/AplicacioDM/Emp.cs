@@ -6,15 +6,15 @@ namespace AplicacioDM
 {
     public class Emp
     {
-        public int empNo ;
-        public string cognom ;      
-        public string ofici ;
-        public int cap ;
-        public string nomCap;
-        public DateTime data_alta ;
-        public decimal salari ;     
-        public decimal comissio ;
-        public int deptNo ;
+        internal int empNo ;
+        internal string cognom ;      
+        internal string ofici ;
+        internal int cap ;
+        internal string nomCap;
+        internal DateTime data_alta ;
+        internal decimal salari ;     
+        internal decimal comissio ;
+        internal int deptNo ;
 
 
         public Emp() { }

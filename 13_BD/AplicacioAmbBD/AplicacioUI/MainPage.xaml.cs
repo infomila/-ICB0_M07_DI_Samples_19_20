@@ -31,6 +31,28 @@ namespace AplicacioUI
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             dtgEmpleats.ItemsSource = EmpDB.getLlistaEmpleats();
+            cmbDept.ItemsSource = DeptDB.getLlistaDepartaments();
+            cmbDept.DisplayMemberPath = "DNom";
+        }
+
+        private void Filter_Click(object sender, RoutedEventArgs e)
+        {
+
+            string cognom = txbCognom.Text;
+            DateTimeOffset off = dpkData.Date;
+            DateTime d = off.DateTime;
+            // Recuperem el codi de departament, en el cas que el combo estigui buit, desem un -1.
+            int numDept = cmbDept.SelectedItem!=null?
+                ((Dept)cmbDept.SelectedItem).DeptNo: EmpDB.SENSE_DEPT;
+
+
+            dtgEmpleats.ItemsSource = EmpDB.getLlistaEmpleats(cognom, d, numDept);
+        }
+
+        private void Clear_Click(object sender, RoutedEventArgs e)
+        {
+            cmbDept.SelectedIndex = -1;
+            txbCognom.Text = "";
         }
     }
 }
