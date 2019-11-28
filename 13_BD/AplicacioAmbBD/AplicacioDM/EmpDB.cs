@@ -91,8 +91,49 @@ namespace AplicacioDM
 
         }
 
- 
+        public static bool update(int empNo, string cognom, int salari, int deptNo)
+        {
+            using (EmpresaDBContext context = new EmpresaDBContext())
+            {
+                using (var connexio = context.Database.GetDbConnection())
+                {
+                    connexio.Open();
 
+                    using (var consulta = connexio.CreateCommand())
+                    {
+                        // Creem transacció
+                        DbTransaction transaction =  connexio.BeginTransaction();
+                        consulta.Transaction = transaction; // Ara si que la consulta usa la transacció
+
+
+                        //string cognom, int salari, int deptNo
+                        consulta.CommandText =
+                        $@"update emp set cognom = @cognom, salari = @salari , dept_no = @deptNo
+                            where emp_no = @empNo";
+
+                        DBUtils.createParameter(consulta, "cognom", cognom, DbType.String);
+                        DBUtils.createParameter(consulta, "salari", salari, DbType.Int32);
+                        DBUtils.createParameter(consulta, "deptNo", deptNo, DbType.Int32);
+                        DBUtils.createParameter(consulta, "empNo", empNo, DbType.Int32);
+
+
+                        int filesModificades = consulta.ExecuteNonQuery();
+                        if(filesModificades==1)
+                        {
+                            transaction.Commit();
+                            return true;
+                        }
+                        else
+                        {
+                            // OMG!
+                            throw new Exception("error durant la inserció de l'empleat , filesModificades="+ filesModificades);
+                            // rollback !!!!!!!!
+                        }
+                        return false;
+                    }
+                }
+            }
+        }
     }
 }
 

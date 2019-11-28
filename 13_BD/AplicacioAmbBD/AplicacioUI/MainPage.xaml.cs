@@ -1,4 +1,6 @@
 ﻿using AplicacioDM;
+using MetroLog;
+using MetroLog.Targets;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -30,6 +32,17 @@ namespace AplicacioUI
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
+#if DEBUG
+            LogManagerFactory.DefaultConfiguration.AddTarget(
+                LogLevel.Debug,
+                LogLevel.Fatal, new FileStreamingTarget());
+#else
+            LogManagerFactory.DefaultConfiguration.AddTarget(
+                LogLevel.Error,
+                LogLevel.Fatal, new FileStreamingTarget());
+#endif
+
+
             dtgEmpleats.ItemsSource = EmpDB.getLlistaEmpleats();
             cmbDept.ItemsSource = DeptDB.getLlistaDepartaments();
             cmbDept.DisplayMemberPath = "DNom";
@@ -67,6 +80,21 @@ namespace AplicacioUI
             {
                 return dtgEmpleats.SelectedItem != null;
             }
+        }
+
+        private bool ModeEdicio = true;
+
+        private void btnSave_Click(object sender, RoutedEventArgs e)
+        {
+            // manca fer validacions
+            // de tots els camps abans de desar
+            // ..............
+            //   YUPI !
+            EmpDB.update(   ((Emp)dtgEmpleats.SelectedItem).EmpNo,
+                            txbCognom.Text, 
+                            Int32.Parse(txtSalari.Text), 
+                            ((Dept)cboDept.SelectedItem).DeptNo);
+
         }
 
         /*
