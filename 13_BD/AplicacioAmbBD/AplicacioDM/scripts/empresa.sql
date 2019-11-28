@@ -11,7 +11,7 @@ drop table IF EXISTS dept;
 CREATE TABLE IDS (
     TABLE_NAME VARCHAR(30)  PRIMARY KEY,
     LAST_ID NUMERIC(10)
-);
+) ENGINE=InnoDB;
 
 
 
@@ -20,7 +20,7 @@ CREATE TABLE DEPT (
                     ,
  DNOM     VARCHAR(14) NOT NULL 
                       ,
- LOC      VARCHAR(14) ) ;
+ LOC      VARCHAR(14) )  ENGINE=InnoDB;
 
  
  
@@ -45,7 +45,7 @@ CREATE TABLE EMP (
  COMISSIO  NUMERIC(10) ,
  DEPT_NO   NUMERIC(2) NOT NULL ,
   FOREIGN KEY (cap ) references emp(emp_no),
- FOREIGN KEY (DEPT_NO ) references dept(dept_no));
+ FOREIGN KEY (DEPT_NO ) references dept(dept_no)) ENGINE=InnoDB;
 
 
 
@@ -100,7 +100,7 @@ CREATE TABLE CLIENT (
  LIMIT_CREDIT        NUMERIC(9,2) ,
  OBSERVACIONS        VARCHAR(200),
  foreign key  (repr_cod) references emp(emp_no)
- );
+ ) ENGINE=InnoDB;
 
 
 
@@ -166,7 +166,7 @@ VALUES (109, 'SPRINGFIELD NUCLEAR POWER PLANT', '13 PERCEBE STR.', 'SPRINGFIELD'
 CREATE TABLE PRODUCTE (
  PROD_NUM     NUMERIC(6) PRIMARY KEY
                          ,
- DESCRIPCIO   VARCHAR (30) NOT NULL );
+ DESCRIPCIO   VARCHAR (30) NOT NULL ) ENGINE=InnoDB;
 
 
 
@@ -206,7 +206,7 @@ CREATE TABLE COMANDA  (
  DATA_TRAMESA        DATETIME,
  TOTAL               NUMERIC(8,2) ,
  FOREIGN KEY (CLIENT_COD) REFERENCES CLIENT (CLIENT_COD)
- );
+ ) ENGINE=InnoDB;
 
 
 
@@ -292,7 +292,7 @@ CREATE TABLE DETALL  (
  FOREIGN KEY (COM_NUM) REFERENCES COMANDA (COM_NUM),
  FOREIGN KEY (PROD_NUM) REFERENCES PRODUCTE (PROD_NUM),
  PRIMARY KEY (COM_NUM,DETALL_NUM)
- );
+ ) ENGINE=InnoDB;
 
 
 

@@ -1,4 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using MetroLog;
+using MetroLog.Targets;
+using Microsoft.EntityFrameworkCore;
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -104,7 +107,7 @@ namespace AplicacioDM
                         // Creem transacció
                         DbTransaction transaction =  connexio.BeginTransaction();
                         consulta.Transaction = transaction; // Ara si que la consulta usa la transacció
-
+                        
 
                         //string cognom, int salari, int deptNo
                         consulta.CommandText =
@@ -126,10 +129,24 @@ namespace AplicacioDM
                         else
                         {
                             // OMG!
-                            throw new Exception("error durant la inserció de l'empleat , filesModificades="+ filesModificades);
                             // rollback !!!!!!!!
+                            transaction.Rollback();
+
+                            ILogger log = LogManagerFactory.DefaultLogManager.GetLogger<EmpDB>();
+
+                            log.Fatal("error durant la inserció de l'empleat , filesModificades=" + filesModificades);
+
+                            //-----------------------------------------------------
+                            // El log es troba a la carpeta següent
+                            // (el número llarg en hexadecimal és el Package name
+                            // que està a l'arxiu "Package.appmanifest"
+                            // en aquest cas és 727b014c-873f-493e-b051-4dd21cf18dae_n82rqfc3nm07y
+                            //C:\Users\Usuari\AppData\Local\Packages\727b014c-873f-493e-b051-4dd21cf18dae_n82rqfc3nm07y\LocalState\MetroLogs
+                            //-----------------------------------------------------
+
+                            return false;
+                            
                         }
-                        return false;
                     }
                 }
             }

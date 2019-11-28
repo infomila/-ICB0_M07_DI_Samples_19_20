@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 
 namespace AplicacioDM
 {
-    public class Emp
+    public class Emp : INotifyPropertyChanged
     {
         internal int empNo ;
         internal string cognom ;      
@@ -40,5 +41,7 @@ namespace AplicacioDM
         public decimal Comissio { get => comissio; set => comissio = value; }
         public int DeptNo { get => deptNo; set => deptNo = value; }
         public string NomCap { get => nomCap; set => nomCap = value; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

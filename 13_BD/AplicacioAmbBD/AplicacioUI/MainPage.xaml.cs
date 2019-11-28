@@ -3,6 +3,7 @@ using MetroLog;
 using MetroLog.Targets;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -29,6 +30,7 @@ namespace AplicacioUI
         {
             this.InitializeComponent();
         }
+        private ObservableCollection<Emp> empleats;
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
@@ -42,8 +44,8 @@ namespace AplicacioUI
                 LogLevel.Fatal, new FileStreamingTarget());
 #endif
 
-
-            dtgEmpleats.ItemsSource = EmpDB.getLlistaEmpleats();
+            empleats = EmpDB.getLlistaEmpleats();
+            dtgEmpleats.ItemsSource = empleats;
             cmbDept.ItemsSource = DeptDB.getLlistaDepartaments();
             cmbDept.DisplayMemberPath = "DNom";
             cboDept.ItemsSource = cmbDept.ItemsSource;
@@ -90,10 +92,23 @@ namespace AplicacioUI
             // de tots els camps abans de desar
             // ..............
             //   YUPI !
-            EmpDB.update(   ((Emp)dtgEmpleats.SelectedItem).EmpNo,
-                            txbCognom.Text, 
-                            Int32.Parse(txtSalari.Text), 
-                            ((Dept)cboDept.SelectedItem).DeptNo);
+            int salari = Int32.Parse(txtSalari.Text);
+            int numDept = ((Dept)cboDept.SelectedItem).DeptNo;
+            if (EmpDB.update(   ((Emp)dtgEmpleats.SelectedItem).EmpNo,
+                            txtCognom.Text, 
+                            salari,
+                            numDept))
+            {
+                //dtgEmpleats.ItemsSource = EmpDB.getLlistaEmpleats();
+
+                Emp emp = ((Emp)dtgEmpleats.SelectedItem);
+                emp.Cognom = txtCognom.Text;
+                emp.Salari = salari;
+                emp.DeptNo = numDept;
+                //empleats
+
+
+            }
 
         }
 
