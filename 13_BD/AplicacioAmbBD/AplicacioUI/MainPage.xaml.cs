@@ -33,6 +33,11 @@ namespace AplicacioUI
             dtgEmpleats.ItemsSource = EmpDB.getLlistaEmpleats();
             cmbDept.ItemsSource = DeptDB.getLlistaDepartaments();
             cmbDept.DisplayMemberPath = "DNom";
+            cboDept.ItemsSource = cmbDept.ItemsSource;
+            cboDept.DisplayMemberPath = "DNom";
+            // Decidim quin dels camps és el que es fa servir
+            // per la propietat "SelectedValue"
+            cboDept.SelectedValuePath = "DeptNo";
         }
 
         private void Filter_Click(object sender, RoutedEventArgs e)
@@ -54,5 +59,24 @@ namespace AplicacioUI
             cmbDept.SelectedIndex = -1;
             txbCognom.Text = "";
         }
+
+
+        public bool EmpleatSeleccionat
+        {
+            get
+            {
+                return dtgEmpleats.SelectedItem != null;
+            }
+        }
+
+        /*
+        private void dtgEmpleats_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(dtgEmpleats.SelectedItem!=null)
+            {
+                Emp emp = ((Emp)dtgEmpleats.SelectedItem);
+                txtCognom.Text = emp.Cognom;
+            }
+        }*/
     }
 }

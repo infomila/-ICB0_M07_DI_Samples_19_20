@@ -23,7 +23,7 @@
             <Button Margin="10,0,0,0" Click="Filter_Click">Filter</Button>
             <Button Margin="10,0,0,0" Click="Clear_Click">Clear</Button>
         </StackPanel>
-        <controls:DataGrid Grid.Row="1" x:Name="dtgEmpleats"></controls:DataGrid>
+        <controls:DataGrid Grid.Row="1" x:Name="dtgEmpleats" ></controls:DataGrid>
         <Grid
             Grid.Row="2"
             >
@@ -42,14 +42,14 @@
             <TextBlock Grid.Column="0" Grid.Row="0" HorizontalTextAlignment="right" Margin="10">Cognom</TextBlock>
             <TextBlock Grid.Column="0" Grid.Row="1" HorizontalTextAlignment="right" Margin="10">Salari</TextBlock>
             <TextBlock Grid.Column="0" Grid.Row="2" HorizontalTextAlignment="right" Margin="10">Departament</TextBlock>
-            <TextBox x:Name="txtCognom" Grid.Column="1" Grid.Row="0"  Margin="10"></TextBox>
-            <TextBox x:Name="txtSalari" Grid.Column="1" Grid.Row="1"  Margin="10" VerticalAlignment="Top"></TextBox>
-            <ComboBox x:Name="cboDept" Grid.Column="1" Grid.Row="2"  Margin="10"></ComboBox>
+            <TextBox x:Name="txtCognom" Text="{Binding ElementName=dtgEmpleats,Path=SelectedItem.Cognom, Mode=OneWay}"  Grid.Column="1" Grid.Row="0"  Margin="10"></TextBox>
+            <TextBox x:Name="txtSalari"  Text="{Binding ElementName=dtgEmpleats,Path=SelectedItem.Salari, Mode=OneWay}" Grid.Column="1" Grid.Row="1"  Margin="10" VerticalAlignment="Top"></TextBox>
+            <ComboBox x:Name="cboDept" SelectedValue="{Binding ElementName=dtgEmpleats, Path=SelectedItem.DeptNo, Mode=OneWay}"  Grid.Column="1" Grid.Row="2"  Margin="10"></ComboBox>
 
             <CommandBar Grid.Column="1" Grid.Row="3" Margin="10">
-                <AppBarButton Icon="Save"   x:Name="btnSave" Label="Save" Click="AppBarButton_Click"/>
-                <AppBarButton Icon="Add"    x:Name="btnAdd" Label="Add"  Click="AppBarButton_Click"/>
-                <AppBarButton Icon="Delete" x:Name="btnDelete" IsEnabled="False" Label="Delete" Click="AppBarButton_Click"/>
+                <AppBarButton Icon="Save"   x:Name="btnSave" Label="Save"  />
+                <AppBarButton Icon="Add"    x:Name="btnAdd" Label="Add"   />
+                <AppBarButton Icon="Delete" x:Name="btnDelete" IsEnabled="{x:Bind EmpleatSeleccionat}" Label="Delete"  />
             </CommandBar>
 
             <!--Button>Save</-->
