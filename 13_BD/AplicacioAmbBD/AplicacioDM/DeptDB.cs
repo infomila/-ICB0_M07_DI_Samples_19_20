@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using MetroLog;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,28 +12,38 @@ namespace AplicacioDM
          
         public static ObservableCollection<Dept> getLlistaDepartaments()
         {
-            using (EmpresaDBContext context = new EmpresaDBContext())
+            try
             {
-                using (var connexio = context.Database.GetDbConnection())
-                {
-                    connexio.Open();
 
-                    using (var consulta = connexio.CreateCommand())
+                using (EmpresaDBContext context = new EmpresaDBContext())
+                {
+                    using (var connexio = context.Database.GetDbConnection())
                     {
-                        consulta.CommandText =  $@"  select * from dept  ";
-                        var reader = consulta.ExecuteReader();
-                        ObservableCollection<Dept> departaments = new ObservableCollection<Dept>();
-                        while (reader.Read())
+                        connexio.Open();
+
+                        using (var consulta = connexio.CreateCommand())
                         {
-                            Dept d = new Dept();
-                            DBUtils.Llegeix(reader, out d.deptNo, "DEPT_NO");
-                            DBUtils.Llegeix(reader, out d.dNom, "DNOM");
-                            DBUtils.Llegeix(reader, out d.loc, "LOC", "");                            
-                            departaments.Add(d);
+                            consulta.CommandText = $@"  select * from dept  ";
+                            var reader = consulta.ExecuteReader();
+                            ObservableCollection<Dept> departaments = new ObservableCollection<Dept>();
+                            while (reader.Read())
+                            {
+                                Dept d = new Dept();
+                                DBUtils.Llegeix(reader, out d.deptNo, "DEPT_NO");
+                                DBUtils.Llegeix(reader, out d.dNom, "DNOM");
+                                DBUtils.Llegeix(reader, out d.loc, "LOC", "");
+                                departaments.Add(d);
+                            }
+                            return departaments;
                         }
-                        return departaments;
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                ILogger log = LogManagerFactory.DefaultLogManager.GetLogger<EmpDB>();
+                log.Fatal("error durant la select dels departaments");
+                return new ObservableCollection<Dept>();
             }
 
         }

@@ -94,10 +94,12 @@ namespace AplicacioUI
             //   YUPI !
             int salari = Int32.Parse(txtSalari.Text);
             int numDept = ((Dept)cboDept.SelectedItem).DeptNo;
-            if (EmpDB.update(   ((Emp)dtgEmpleats.SelectedItem).EmpNo,
+            EmpDB_Update_Error_Codes errCode;
+            if (EmpDB.Update(   ((Emp)dtgEmpleats.SelectedItem).EmpNo,
                             txtCognom.Text, 
                             salari,
-                            numDept))
+                            numDept,
+                            out errCode))
             {
                 //dtgEmpleats.ItemsSource = EmpDB.getLlistaEmpleats();
 
@@ -106,11 +108,42 @@ namespace AplicacioUI
                 emp.Salari = salari;
                 emp.DeptNo = numDept;
                 //empleats
+            } else
+            {
+                String missatgeError = "";
+                switch(errCode)
+                {
+                    case EmpDB_Update_Error_Codes.ERR_COGNOM_REPETIT:
+                        missatgeError = "El cognom està repetit"; break;
+                    case EmpDB_Update_Error_Codes.ERR_INESPERAT:
+                        missatgeError = "Error inesperat mentre es connnectava a la BD";
+                        break;
+                    default:
+                        missatgeError = "Error inesperat mentre es connnectava a la BD";
+                        break;                    
+                }
 
+                DisplayError(missatgeError);
 
             }
 
         }
+
+        private async void DisplayError(String error)
+        {
+            ContentDialog dialeg = new ContentDialog
+            {
+                Title = "Error",
+                Content = error,
+                CloseButtonText = "Ok"
+            };
+
+            ContentDialogResult result = await dialeg.ShowAsync();
+        }
+
+
+
+
 
         /*
         private void dtgEmpleats_SelectionChanged(object sender, SelectionChangedEventArgs e)
