@@ -26,13 +26,8 @@ namespace AplicacioUI
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        public MainPage()
-        {
-            this.InitializeComponent();
-        }
-        private ObservableCollection<Emp> empleats;
-
-        private void Page_Loaded(object sender, RoutedEventArgs e)
+        
+         static MainPage()
         {
 #if DEBUG
             LogManagerFactory.DefaultConfiguration.AddTarget(
@@ -43,16 +38,23 @@ namespace AplicacioUI
                 LogLevel.Error,
                 LogLevel.Fatal, new FileStreamingTarget());
 #endif
+        }
+
+        public MainPage()
+        {
+            this.InitializeComponent();
+        }
+        private ObservableCollection<Emp> empleats;
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+
 
             empleats = EmpDB.getLlistaEmpleats();
             dtgEmpleats.ItemsSource = empleats;
             cmbDept.ItemsSource = DeptDB.getLlistaDepartaments();
             cmbDept.DisplayMemberPath = "DNom";
-            cboDept.ItemsSource = cmbDept.ItemsSource;
-            cboDept.DisplayMemberPath = "DNom";
-            // Decidim quin dels camps és el que es fa servir
-            // per la propietat "SelectedValue"
-            cboDept.SelectedValuePath = "DeptNo";
+   
         }
 
         private void Filter_Click(object sender, RoutedEventArgs e)
@@ -92,11 +94,11 @@ namespace AplicacioUI
             // de tots els camps abans de desar
             // ..............
             //   YUPI !
-            int salari = Int32.Parse(txtSalari.Text);
-            int numDept = ((Dept)cboDept.SelectedItem).DeptNo;
+            int salari =  (int) uiFitxa.Empleat.Salari;
+            int numDept = uiFitxa.Empleat.DeptNo;
             EmpDB_Update_Error_Codes errCode;
             if (EmpDB.Update(   ((Emp)dtgEmpleats.SelectedItem).EmpNo,
-                            txtCognom.Text, 
+                            uiFitxa.Empleat.Cognom, 
                             salari,
                             numDept,
                             out errCode))
@@ -104,9 +106,9 @@ namespace AplicacioUI
                 //dtgEmpleats.ItemsSource = EmpDB.getLlistaEmpleats();
 
                 Emp emp = ((Emp)dtgEmpleats.SelectedItem);
-                emp.Cognom = txtCognom.Text;
-                emp.Salari = salari;
-                emp.DeptNo = numDept;
+                emp.Cognom = uiFitxa.Empleat.Cognom;
+                emp.Salari = uiFitxa.Empleat.Salari;
+                emp.DeptNo = uiFitxa.Empleat.DeptNo;
                 //empleats
             } else
             {
@@ -139,6 +141,16 @@ namespace AplicacioUI
             };
 
             ContentDialogResult result = await dialeg.ShowAsync();
+        }
+
+        private void dtgEmpleats_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Emp emp = ((Emp)dtgEmpleats.SelectedItem);
+            if (emp != null)
+            {
+                Emp clonic = new Emp(emp);
+                uiFitxa.Empleat = clonic;
+            }
         }
 
 

@@ -32,6 +32,18 @@ namespace AplicacioDM
             this.DeptNo = deptNo;
         }
 
+        public Emp(Emp source)
+        {
+            this.EmpNo = source.EmpNo;
+            this.Cognom = source.Cognom;
+            this.Ofici = source.Ofici;
+            this.Cap = source.Cap;
+            this.Data_alta = source.Data_alta;
+            this.Salari = source.Salari;
+            this.Comissio = source.Comissio;
+            this.DeptNo = source.DeptNo;
+        }
+
         public int EmpNo { get => empNo; set => empNo = value; }
         public string Cognom { get => cognom; set => cognom = value; }
         public string Ofici { get => ofici; set => ofici = value; }

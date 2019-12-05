@@ -11,7 +11,7 @@ namespace AplicacioDM
         protected override void OnConfiguring(
             DbContextOptionsBuilder optionBuilder)
         {
-            optionBuilder.UseMySQL("Server=localhost;Database=empresa;UID=root;Password=");
+            optionBuilder.UseMySQL("Server=localhost;Database=empresa;UID=root;Password=informatica");
         }
 
     }
