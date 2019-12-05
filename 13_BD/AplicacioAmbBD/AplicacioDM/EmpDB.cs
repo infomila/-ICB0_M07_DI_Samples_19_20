@@ -117,9 +117,8 @@ namespace AplicacioDM
 
         public static bool Insert(Emp empleat, out EmpDB_Update_Error_Codes errorCode)
         {
-            errorCode = EmpDB_Update_Error_Codes.ERR_NO_ERROR;
-            return true;
-            /*
+
+
             try
             {
                 using (EmpresaDBContext context = new EmpresaDBContext())
@@ -130,65 +129,84 @@ namespace AplicacioDM
 
                         using (var consulta = connexio.CreateCommand())
                         {
-                            // Creem transacció
-                            DbTransaction transaction = connexio.BeginTransaction();
-                            consulta.Transaction = transaction; // Ara si que la consulta usa la transacció
-
-                            // 
-                            consulta.CommandText =
-                                $@"select count(1) from emp where cognom=@cognom";
-                            DBUtils.createParameter(consulta, "cognom", empleat.Cognom, DbType.String);
-                            object o = consulta.ExecuteScalar();
-                            int numEmpleats = (int)((long)o);
-                            if (numEmpleats > 0)
-                            {
-                                // El cognom ja existeix, i al avisar a l'usuari.
-
-                                errorCode = EmpDB_Update_Error_Codes.ERR_COGNOM_REPETIT;
-                                return false;
-                            }
-                            else
+                            DbTransaction transaction = null;
+                            try
                             {
 
-                                //string cognom, int salari, int deptNo
+                                // Creem transacció
+                                transaction = connexio.BeginTransaction();
+                                consulta.Transaction = transaction; // Ara si que la consulta usa la transacció
+
+                                // 
                                 consulta.CommandText =
-                                $@"insert into emp (empNo, cognom, salari, deptNo  ) values
-                                (@empNo,  @cognom, @salari , @deptNo )";
-
+                                    $@"select count(1) from emp where cognom=@cognom";
                                 DBUtils.createParameter(consulta, "cognom", empleat.Cognom, DbType.String);
-                                DBUtils.createParameter(consulta, "salari", empleat.Salari, DbType.Int32);
-                                DBUtils.createParameter(consulta, "deptNo", empleat.DeptNo, DbType.Int32);
-                                DBUtils.createParameter(consulta, "empNo", emp, DbType.Int32);
-
-
-                                int filesModificades = consulta.ExecuteNonQuery();
-                                if (filesModificades == 1)
+                                object o = consulta.ExecuteScalar();
+                                int numEmpleats = (int)((long)o);
+                                if (numEmpleats > 0)
                                 {
-                                    transaction.Commit();
-                                    return true;
+                                    // El cognom ja existeix, i al avisar a l'usuari.
+
+                                    errorCode = EmpDB_Update_Error_Codes.ERR_COGNOM_REPETIT;
+                                    return false;
                                 }
                                 else
                                 {
-                                    // OMG!
-                                    // rollback !!!!!!!!
-                                    transaction.Rollback();
 
-                                    ILogger log = LogManagerFactory.DefaultLogManager.GetLogger<EmpDB>();
+                                    //string cognom, int salari, int deptNo
+                                    consulta.CommandText =
+                                    $@"insert into emp (emp_no, cognom, salari, dept_no , data_alta ) values
+                                (@empNo,  @cognom, @salari , @deptNo, @dataAlta )";
 
-                                    log.Fatal("error durant la inserció de l'empleat , filesModificades=" + filesModificades);
+                                    decimal salari = Decimal.Parse(empleat.SalariS);
 
-                                    //-----------------------------------------------------
-                                    // El log es troba a la carpeta següent
-                                    // (el número llarg en hexadecimal és el Package name
-                                    // que està a l'arxiu "Package.appmanifest"
-                                    // en aquest cas és 727b014c-873f-493e-b051-4dd21cf18dae_n82rqfc3nm07y
-                                    //C:\Users\Usuari\AppData\Local\Packages\727b014c-873f-493e-b051-4dd21cf18dae_n82rqfc3nm07y\LocalState\MetroLogs
-                                    //-----------------------------------------------------
 
-                                    return false;
+                                    //DBUtils.createParameter(consulta, "cognom", empleat.Cognom, DbType.String);
+                                    DBUtils.createParameter(consulta, "salari", salari, DbType.Decimal);
+                                    DBUtils.createParameter(consulta, "deptNo", empleat.DeptNo, DbType.Int32);
+                                    DBUtils.createParameter(consulta, "dataAlta", DateTime.Now , DbType.DateTime);
+                                    DBUtils.createParameter(consulta, "empNo", DBUtils.GetId(connexio, transaction, "emp"), DbType.Int32);
 
+
+                                    int filesModificades = consulta.ExecuteNonQuery();
+                                    if (filesModificades == 1)
+                                    {
+                                        transaction.Commit();
+                                        errorCode = EmpDB_Update_Error_Codes.ERR_NO_ERROR;
+                                        return true;
+                                    }
+                                    else
+                                    {
+                                        // OMG!
+                                        // rollback !!!!!!!!
+                                        transaction.Rollback();
+
+                                        ILogger log = LogManagerFactory.DefaultLogManager.GetLogger<EmpDB>();
+
+                                        log.Fatal("error durant la inserció de l'empleat , filesModificades=" + filesModificades);
+
+                                        //-----------------------------------------------------
+                                        // El log es troba a la carpeta següent
+                                        // (el número llarg en hexadecimal és el Package name
+                                        // que està a l'arxiu "Package.appmanifest"
+                                        // en aquest cas és 727b014c-873f-493e-b051-4dd21cf18dae_n82rqfc3nm07y
+                                        //C:\Users\Usuari\AppData\Local\Packages\727b014c-873f-493e-b051-4dd21cf18dae_n82rqfc3nm07y\LocalState\MetroLogs
+                                        //-----------------------------------------------------
+                                        errorCode = EmpDB_Update_Error_Codes.ERR_INESPERAT;
+                                        return false;
+
+                                    }
                                 }
+
                             }
+                            catch(Exception e)
+                            {
+                                if (transaction != null)
+                                    transaction.Rollback();
+                                errorCode = EmpDB_Update_Error_Codes.ERR_INESPERAT;
+                                return false;
+                            }
+
                         }
                     }
                 }
@@ -200,7 +218,7 @@ namespace AplicacioDM
                 log.Error("Error inesperat a l'actualització de dades", ex);
                 return false;
             }
-            */
+            
         }
 
         public static bool Update(

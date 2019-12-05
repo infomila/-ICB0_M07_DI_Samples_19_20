@@ -50,6 +50,25 @@ namespace AplicacioDM
         public int Cap { get => cap; set => cap = value; }
         public DateTime Data_alta { get => data_alta; set => data_alta = value; }
         public decimal Salari { get => salari; set => salari = value; }
+
+
+        private string salariS = null;
+
+        public String SalariS
+        {
+            get
+            {
+                if (salariS == null)
+                    return Salari.ToString();
+                else
+                    return salariS;
+            }
+            set {
+                salariS = value;
+            }
+        }
+
+
         public decimal Comissio { get => comissio; set => comissio = value; }
         public int DeptNo { get => deptNo; set => deptNo = value; }
         public string NomCap { get => nomCap; set => nomCap = value; }

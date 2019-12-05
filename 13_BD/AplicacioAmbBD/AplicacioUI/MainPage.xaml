@@ -42,7 +42,7 @@
 
             <CommandBar Grid.Column="0" Grid.Row="1" Margin="10">
                 <AppBarButton Icon="Save" Click="btnSave_Click"  x:Name="btnSave" Label="Save"  />
-                <AppBarButton Icon="Add"    x:Name="btnAdd" Label="Add"   />
+                <AppBarButton Icon="Add"    x:Name="btnAdd" Label="Add"  Click="btnAdd_Click" />
                 <AppBarButton Icon="Delete" x:Name="btnDelete" IsEnabled="{x:Bind EmpleatSeleccionat}" Label="Delete"  />
             </CommandBar>
 

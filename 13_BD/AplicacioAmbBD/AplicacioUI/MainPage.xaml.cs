@@ -1,4 +1,5 @@
 ﻿using AplicacioDM;
+using AplicacioUI.View;
 using MetroLog;
 using MetroLog.Targets;
 using System;
@@ -151,6 +152,17 @@ namespace AplicacioUI
                 Emp clonic = new Emp(emp);
                 uiFitxa.Empleat = clonic;
             }
+        }
+
+        private async void btnAdd_Click(object sender, RoutedEventArgs e)
+        {
+            NewEmpDialog dialeg = new NewEmpDialog();
+            await dialeg.ShowAsync();
+            if (dialeg.ClientInserit)
+            {
+                dtgEmpleats.ItemsSource = EmpDB.getLlistaEmpleats();
+            }
+
         }
 
 

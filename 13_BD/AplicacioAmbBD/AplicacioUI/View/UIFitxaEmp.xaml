@@ -29,7 +29,7 @@
         <TextBlock Grid.Column="0" Grid.Row="1" HorizontalTextAlignment="right" Margin="10">Salari</TextBlock>
         <TextBlock Grid.Column="0" Grid.Row="2" HorizontalTextAlignment="right" Margin="10">Departament</TextBlock>
         <TextBox x:Name="txtCognom" Text="{Binding ElementName=ucFitxa,Path=Empleat.Cognom, Mode=TwoWay}"  Grid.Column="1" Grid.Row="0"  Margin="10"></TextBox>
-        <TextBox x:Name="txtSalari"  Text="{Binding ElementName=ucFitxa,Path=Empleat.Salari, Mode=TwoWay}" Grid.Column="1" Grid.Row="1"  Margin="10" VerticalAlignment="Top"></TextBox>
+        <TextBox x:Name="txtSalari"  Text="{Binding ElementName=ucFitxa,Path=Empleat.SalariS, Mode=TwoWay}" Grid.Column="1" Grid.Row="1"  Margin="10" VerticalAlignment="Top"></TextBox>
         <ComboBox x:Name="cboDept" SelectedValue="{Binding ElementName=ucFitxa, Path=Empleat.DeptNo, Mode=TwoWay}"  Grid.Column="1" Grid.Row="2"  Margin="10"></ComboBox>
 
       

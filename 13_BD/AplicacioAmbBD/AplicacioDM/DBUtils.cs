@@ -66,5 +66,33 @@ namespace AplicacioDM
                 valor = reader.GetDecimal(ordinal);
             }
         }
+
+        internal static object GetId(DbConnection connexio, DbTransaction transaction, string table_name)
+        {
+                using (var consulta = connexio.CreateCommand())
+                {
+                    consulta.Transaction = transaction; // Ara si que la consulta usa la transacció
+
+                    // 
+                    consulta.CommandText =
+                        $@"select last_id from ids where table_name=@table_name for update";
+                    DBUtils.createParameter(consulta, "table_name", table_name, DbType.String);
+                    object o = consulta.ExecuteScalar();
+                    int last_id = (int)((decimal)o);
+                    last_id++;
+                    consulta.CommandText = $@"update ids set last_id=@last_id where table_name=@table_name ";
+                    //DBUtils.createParameter(consulta, "table_name", table_name, DbType.String);
+                    DBUtils.createParameter(consulta, "last_id", last_id, DbType.Int32);
+                    int filesActualitzades = consulta.ExecuteNonQuery();
+
+                    if (filesActualitzades != 1)
+                    {
+                        throw new Exception("Error actualitzant IDS");
+                    }
+
+                    return last_id;
+                }
+        }
+        
     }
 }

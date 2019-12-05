@@ -23,6 +23,7 @@ namespace AplicacioUI.View
         public NewEmpDialog()
         {
             this.InitializeComponent();
+            ClientInserit = false;
         }
 
         private void ContentDialog_Loaded(object sender, RoutedEventArgs e)
@@ -32,7 +33,11 @@ namespace AplicacioUI.View
         }
         private void btnSave_click(object sender, RoutedEventArgs e)
         {
-           // EmpDB.Insert(uiFitxa.Empleat);
+            EmpDB_Update_Error_Codes err;
+            if(EmpDB.Insert(uiFitxa.Empleat, out err))
+            {
+                ClientInserit = true;
+            }
             // manca validar
             this.Hide();
         }
@@ -40,5 +45,10 @@ namespace AplicacioUI.View
         {
             this.Hide();
         }
+
+
+        public bool ClientInserit { get; set; }
+
+
     }
 }

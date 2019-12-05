@@ -34,7 +34,7 @@ namespace AplicacioUI.View
         // Using a DependencyProperty as the backing store for Empresa.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty EmpresaProperty =
             DependencyProperty.Register("Empleat", typeof(Emp), typeof(UIFitxaEmp), 
-                new PropertyMetadata(null));
+                new PropertyMetadata(new Emp()));
 
         private void ucFitxa_Loaded(object sender, RoutedEventArgs e)
         {        
