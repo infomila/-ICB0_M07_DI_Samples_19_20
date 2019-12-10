@@ -99,6 +99,7 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="View\IsNullToBooleanConverter.cs" />
     <Compile Include="View\NewEmpDialog.xaml.cs">
       <DependentUpon>NewEmpDialog.xaml</DependentUpon>
     </Compile>

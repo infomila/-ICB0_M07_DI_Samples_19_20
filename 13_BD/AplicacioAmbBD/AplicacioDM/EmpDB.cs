@@ -18,7 +18,8 @@ namespace AplicacioDM
     {
         ERR_NO_ERROR,
         ERR_COGNOM_REPETIT,
-        ERR_INESPERAT
+        ERR_INESPERAT,
+        ERR_EMPLEAT_AMB_SUBORDINATS
     }
 
 
@@ -117,8 +118,6 @@ namespace AplicacioDM
 
         public static bool Insert(Emp empleat, out EmpDB_Update_Error_Codes errorCode)
         {
-
-
             try
             {
                 using (EmpresaDBContext context = new EmpresaDBContext())
@@ -220,6 +219,102 @@ namespace AplicacioDM
             }
             
         }
+
+        public static bool Delete(Emp empleat, out EmpDB_Update_Error_Codes errorCode)
+        {
+            try
+            {
+                using (EmpresaDBContext context = new EmpresaDBContext())
+                {
+                    using (var connexio = context.Database.GetDbConnection())
+                    {
+                        connexio.Open();
+
+                        using (var consulta = connexio.CreateCommand())
+                        {
+                            DbTransaction transaction = null;
+                            try
+                            {
+
+                                // Creem transacció
+                                transaction = connexio.BeginTransaction();
+                                consulta.Transaction = transaction; // Ara si que la consulta usa la transacció
+
+                                // 
+                                consulta.CommandText =
+                                    $@"select count(1) from emp where cap=@empNo";
+                                DBUtils.createParameter(consulta, "empNo", empleat.EmpNo, DbType.Int32);
+                                object o = consulta.ExecuteScalar();
+                                int numSubordinats= (int)((long)o);
+                                if (numSubordinats > 0)
+                                {
+                                    // El cognom ja existeix, i al avisar a l'usuari.
+
+                                    errorCode = EmpDB_Update_Error_Codes.ERR_EMPLEAT_AMB_SUBORDINATS;
+                                    return false;
+                                }
+                                else
+                                {
+
+                                    //string cognom, int salari, int deptNo
+                                    consulta.CommandText =
+                                    $@"delete from emp where emp_no=@empNo";
+
+                                     int filesModificades = consulta.ExecuteNonQuery();
+                                    if (filesModificades == 1)
+                                    {
+                                        transaction.Commit();
+                                        errorCode = EmpDB_Update_Error_Codes.ERR_NO_ERROR;
+                                        return true;
+                                    }
+                                    else
+                                    {
+                                        // OMG!
+                                        // rollback !!!!!!!!
+                                        transaction.Rollback();
+
+                                        ILogger log = LogManagerFactory.DefaultLogManager.GetLogger<EmpDB>();
+
+                                        log.Fatal("error durant la inserció de l'empleat , filesModificades=" + filesModificades);
+
+                                        //-----------------------------------------------------
+                                        // El log es troba a la carpeta següent
+                                        // (el número llarg en hexadecimal és el Package name
+                                        // que està a l'arxiu "Package.appmanifest"
+                                        // en aquest cas és 727b014c-873f-493e-b051-4dd21cf18dae_n82rqfc3nm07y
+                                        //C:\Users\Usuari\AppData\Local\Packages\727b014c-873f-493e-b051-4dd21cf18dae_n82rqfc3nm07y\LocalState\MetroLogs
+                                        //-----------------------------------------------------
+                                        errorCode = EmpDB_Update_Error_Codes.ERR_INESPERAT;
+                                        return false;
+
+                                    }
+                                }
+
+                            }
+                            catch (Exception e)
+                            {
+                                if (transaction != null)
+                                    transaction.Rollback();
+                                errorCode = EmpDB_Update_Error_Codes.ERR_INESPERAT;
+                                return false;
+                            }
+
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                errorCode = EmpDB_Update_Error_Codes.ERR_INESPERAT;
+                ILogger log = LogManagerFactory.DefaultLogManager.GetLogger<EmpDB>();
+                log.Error("Error inesperat a l'actualització de dades", ex);
+                return false;
+            }
+
+        }
+
+
+
 
         public static bool Update(
             int empNo, 

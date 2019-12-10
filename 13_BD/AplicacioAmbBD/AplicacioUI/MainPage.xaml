@@ -7,9 +7,14 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:view="using:AplicacioUI.View"
+    xmlns:converters="using:ValueConverters"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     Loaded="Page_Loaded">
+    <Page.Resources>
+                                               
+        <view:IsNullToBooleanConverter x:Key="IsNullToBooleanConverter"></view:IsNullToBooleanConverter>
+    </Page.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -43,7 +48,7 @@
             <CommandBar Grid.Column="0" Grid.Row="1" Margin="10">
                 <AppBarButton Icon="Save" Click="btnSave_Click"  x:Name="btnSave" Label="Save"  />
                 <AppBarButton Icon="Add"    x:Name="btnAdd" Label="Add"  Click="btnAdd_Click" />
-                <AppBarButton Icon="Delete" x:Name="btnDelete" IsEnabled="{x:Bind EmpleatSeleccionat}" Label="Delete"  />
+                <AppBarButton Icon="Delete" x:Name="btnDelete" IsEnabled="{Binding ElementName=dtgEmpleats, Path=SelectedItem, Converter={StaticResource IsNullToBooleanConverter}}" Click="btnDelete_Click"  Label="Delete"  />
             </CommandBar>
 
             <!--Button>Save</-->

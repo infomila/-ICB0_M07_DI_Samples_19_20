@@ -165,6 +165,26 @@ namespace AplicacioUI
 
         }
 
+        private void btnDelete_Click(object sender, RoutedEventArgs e)
+        {
+            if(dtgEmpleats.SelectedItem!=null)
+            {
+                EmpDB_Update_Error_Codes err;
+                if(EmpDB.Delete((Emp)dtgEmpleats.SelectedItem, out err))
+                {
+                    empleats.RemoveAt(dtgEmpleats.SelectedIndex);
+                } else
+                {
+                    String error = "Error fatal esborrant l'empleat";
+                    if (err == EmpDB_Update_Error_Codes.ERR_EMPLEAT_AMB_SUBORDINATS)
+                    {
+                        error = "No pots esborrar aquest empleat, té subordinats.";
+                    }
+                    DisplayError(error);
+                }
+            }
+        }
+
 
 
 
