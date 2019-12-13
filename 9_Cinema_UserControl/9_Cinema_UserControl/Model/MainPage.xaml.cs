@@ -33,6 +33,28 @@ namespace _9_Cinema_UserControl
             uicad2.LaCadira = s.Cadires[25];
             uicad3.LaCadira = s.Cadires[45];
             uicad4.LaCadira = s.Cadires[65];
+
+            List<Cadira> seleccionades = new List<Cadira>();
+            foreach (Cadira c in s.Cadires) {
+                if (c.Estat==EnumEstat.SELECCIONADA)
+                {
+                    seleccionades.Add(c);
+                }
+            }
+            //-------------------------------------
+            // LAMBDA EXPRESSIONS
+            List<Cadira> seleccionades2 = 
+                s.Cadires.Where(c => c.Estat == EnumEstat.SELECCIONADA).ToList();
+
+            decimal total = 0;
+            s.Cadires.ForEach(c => total += c.Id);
+
+            List<Cadira> cadiresOrdenadesId = s.Cadires.OrderBy(c => c.Id).ToList();
+
+
+
+
+
         }
 
     
