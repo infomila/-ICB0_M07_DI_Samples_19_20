@@ -4,3 +4,13 @@
 1. Obrir Visual Studio 2017 i carregar el projecte xxx.sln
 1. Compilar
 
+## Logotip de l'empresa
+
+![asdf]("~/images/persones.jpg")
+
+| id | nom |
+|----|-----|
+| 1  |Paco |
+
+
+

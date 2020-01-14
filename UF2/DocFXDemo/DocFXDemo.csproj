@@ -108,6 +108,9 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
+    <None Include="articles\how_to_setup.md" />
+    <None Include="articles\intro.md" />
+    <None Include="articles\toc.yml" />
     <None Include="DocFXDemo_TemporaryKey.pfx" />
     <None Include="model\ClassDiagram.model.cd" />
   </ItemGroup>
