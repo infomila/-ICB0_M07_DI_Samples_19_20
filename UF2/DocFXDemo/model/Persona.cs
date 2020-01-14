@@ -53,6 +53,14 @@ namespace DocFXDemo.model
         ///     }
         /// ```
         /// 
+        /// 
+        ///```plantUml
+        ///Bob -> Alice : hello
+        ///Alice -> Bob : Go Away
+        ///```
+        /// 
+        /// 
+        /// 
         /// </summary>
         /// <param name="NIF">NIF en format 99999999X. Obligatori. No pot estar repetit. </param>
         /// <param name="nom">Nom complet de la persona (inclou els cognoms). Mínim 2 caràcters. Obligatori.</param>
