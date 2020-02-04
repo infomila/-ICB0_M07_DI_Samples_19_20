@@ -10,6 +10,8 @@
   
 		<Feature Id="FEA_PRODUCT" Title="SetupProject" Level="1">
 			<ComponentGroupRef Id="CG_ProductComponents" />
+      <ComponentGroupRef Id="CG_ACCESSOS_DIRECTES_MENU_INICI" />
+      <ComponentGroupRef Id="CG_ACCESSOS_DIRECTES_ESCRIPTORI" />
 		</Feature>
     <Feature Id="FEA_DOC" Title="Documentació" Level="4">
 			<!--ComponentGroupRef Id="CG_Documentacio" /-->
@@ -24,6 +26,10 @@
     <UIRef Id="WixUI_Mondo"/>
     <UIRef Id="WixUI_ErrorProgressText" />
     
+    <!-- *******************************  ICONES ************************************ -->
+    <Icon Id="ICN_EXECUTABLE" SourceFile="$(var.AppWixSetupDemo.TargetDir)AppWixSetupDemo.exe"/>
+    
+    
 	</Product>
 
 	<Fragment>
@@ -34,7 +40,16 @@
 				<Directory Id="INSTALLFOLDER" Name="SetupProject" >
           <Directory Id="DIR_DOC"  Name="Documentacio"></Directory>
        </Directory>
-			</Directory>    
+			</Directory> 
+    
+      <!-- Definim la carpeta d'escriptori-->
+      <Directory Id="DesktopFolder"></Directory>
+      
+      <!-- Definim la carpeta de Menú d'inici-->
+       <Directory Id="ProgramMenuFolder" >         <!-- ProgramMenuFolder = Menú d'inici -->
+         <Directory Id="DIR_MENU_INICI" Name="SetupProject"></Directory>
+       </Directory>
+  
 		</Directory>
 	</Fragment>
 
@@ -42,12 +57,67 @@
     <!-- components situats al projecte, dins de la màquina del programador -->    
     <!-- IMPORTANT: les variables $(var.xxxxxx) només funcionen si posem la referència del projecte al SetupProject  -->
       
+    <ComponentGroup Id="CG_ACCESSOS_DIRECTES_MENU_INICI" Directory="DIR_MENU_INICI">
+      <Component  Id="CMP_SHORCUT_EXECUTABLE" Guid="003e3e5c-a2a5-4d0b-aead-8305f60336a8">
+        <Shortcut Id="SHR_EXECUTABLE"  
+                  Name="SetupProgram"
+                  Description="Programa instal·lat"
+                  Target="[INSTALLFOLDER]AppWixSetupDemo.exe"
+                  Icon="ICN_EXECUTABLE"
+        />
+        <!-- Comentaris del Shorcut:-->                
+        <!--         
+          a) Target="[INSTALLFOLDER]AppWixSetupDemo.exe"  => INSTALLFOLDER és una referència a un Directory (on s'instal·la l'executable)
+          b) La icona (Icon) s'ha de definir dins del tag PRODUCT
+        -->
+        
+        <!-- Afegirm (OPCIONAL) un enllaç al desinstal·lador -->
+        <Shortcut Id="UnistallShorcut"
+                 Name="Desinstal·lar programa"
+                 Description="Desinstal·lar programa++"
+                 Target="[System64Folder]msiexec.exe"
+                 Arguments="/x [ProductCode]"/>
+
+        <!-- OBLIGATORI: Indiquem que cal esborrar l'accés directen quan desinstal·lem -->
+        <RemoveFolder Id="IdBasuraQueNoServeixPerARes" On="uninstall"/>
+        <!-- OBLIGATORI: cal definir una clau al registre -->
+        <RegistryValue Root="HKCU"
+                       Key="Software\iesmila\setupproject"
+                       Name="installed"
+                       Type="integer"
+                       Value="1"
+                       KeyPath="yes"/>
+      </Component>    
+    </ComponentGroup>
+    
+
+    <ComponentGroup Id="CG_ACCESSOS_DIRECTES_ESCRIPTORI" Directory="DesktopFolder"> <!-- per wix DesktopFolder = escriptori -->
+      <Component  Id="CMP_SHORCUT_EXECUTABLE_DESK" Guid="2a6af715-c672-4af7-b7ea-7984a8fe9c9a">
+        <Shortcut Id="SHR_EXECUTABLE_DESK"  
+                  Name="SetupProgram"
+                  Description="Programa instal·lat"
+                  Target="[INSTALLFOLDER]AppWixSetupDemo.exe"
+                  Icon="ICN_EXECUTABLE"
+        />      
+
+        <!-- OBLIGATORI: cal definir una clau al registre -->
+        <RegistryValue Root="HKCU"
+                       Key="Software\iesmila\setupproject"
+                       Name="installedDesktop"
+                       Type="integer"
+                       Value="1"
+                       KeyPath="yes"/>
+      </Component>    
+    </ComponentGroup>
+        
+    
     <!--ComponentGroup Id="CG_Documentacio" Directory="DIR_DOC">
         <Component Id="CMP_readme">
           <File Id="FIL_readme" Source="$(var.AppWixSetupDemo.ProjectDir)doc\readme.txt"></File>
         </Component>
     </ComponentGroup-->
       
+    
         
 		<ComponentGroup Id="CG_ProductComponents" Directory="INSTALLFOLDER">
 			<Component Id="CMP_executable">
