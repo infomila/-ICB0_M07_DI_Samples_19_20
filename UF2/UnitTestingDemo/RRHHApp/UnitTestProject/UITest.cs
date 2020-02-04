@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TestStack.White;
 using TestStack.White.UIItems;
+using TestStack.White.UIItems.ListBoxItems;
 
 namespace UnitTestProject
 {
@@ -68,19 +69,48 @@ namespace UnitTestProject
             rutaAlExecutable += "\\RRHHApp.exe";
             Application app = Application.Launch(rutaAlExecutable);
             TestStack.White.UIItems.WindowItems.Window w = app.GetWindows()[0];
-            //--------------------------------------------
+            //------------------------------------------
+            ComboBox cboOperacio = w.Get<ComboBox>("cboOperacio");
+            Button b = w.Get<Button>("btnOperar");
+            TextBox tr = w.Get<TextBox>("txtRes");
+            //------------------------------------------
             TextBox t1 = w.Get<TextBox>("txtOp1");
             TextBox t2 = w.Get<TextBox>("txtOp2");
             int num1 = 2, num2 = 3;
             t1.Text = ""+num1;
             t2.Text = "" + num2;
             //--------------------------------------------
-            Button b = w.Get<Button>("btnOperar");
+            // Operació "+"
+            //--------------------------------------------
+            cboOperacio.Select("+");            
             b.Click();
-
-            TextBox tr = w.Get<TextBox>("txtRes");
             Assert.AreEqual(num1 + num2 + "", tr.Text);
+            //--------------------------------------------
+            //--------------------------------------------
+            // Operació "-"
+            //--------------------------------------------
+            cboOperacio.Select("-");
+            b.Click();
+            Assert.AreEqual(num1 - num2 + "", tr.Text);
+            //--------------------------------------------
+            //--------------------------------------------
+            // Operació "*"
+            //--------------------------------------------
+            cboOperacio.Select("*");
+            b.Click();
+            Assert.AreEqual(num1 * num2 + "", tr.Text);
+            //--------------------------------------------
+            //--------------------------------------------
+            // Operació "/"
+            //--------------------------------------------
+            cboOperacio.Select("/");
+            b.Click();
+            Assert.AreEqual(num1 / num2 + "", tr.Text);
+            //--------------------------------------------
 
+            ListView dtgPersones = w.Get<ListView>("dtgPersones");
+            dtgPersones.Rows[1].Cells[0].Click();
+            Assert.AreEqual("Maria", dtgPersones.SelectedRows[0].Cells[1].Text);
 
         }
     }

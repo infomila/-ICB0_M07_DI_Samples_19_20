@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RRHHApp.model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -30,6 +31,12 @@ namespace RRHHApp
             operacions.Add("*");
             cboOperacio.ItemsSource = operacions;
             cboOperacio.SelectedIndex = 0;
+            //-----------------
+
+            Persona p1 = new Persona("11111111H", "Paco", DateTime.Now);
+            Persona p2 = new Persona("22222222H", "Maria", DateTime.Now);
+            List<Persona> persones = new List<Persona>() { p1, p2 };
+            dtgPersones.ItemsSource = persones;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

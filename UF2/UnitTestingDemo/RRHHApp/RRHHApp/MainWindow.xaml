@@ -6,12 +6,16 @@
         xmlns:local="clr-namespace:RRHHApp"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800" >
-    <StackPanel Orientation="Horizontal" Height="30" Margin="30" >
-        <TextBox x:Name="txtOp1" MinWidth="100" VerticalContentAlignment="Center"></TextBox>
-        <ComboBox x:Name="cboOperacio"></ComboBox>
-        <TextBox x:Name="txtOp2" MinWidth="100"  VerticalContentAlignment="Center"></TextBox>
-        <Button x:Name="btnOperar" Click="Button_Click"   FontSize="20"> = </Button>
-        <TextBox x:Name="txtRes" MinWidth="100" IsEnabled="False"  VerticalContentAlignment="Center"></TextBox>
-                            
+    <StackPanel Orientation="Vertical" Margin="30" >
+        <StackPanel Orientation="Horizontal" Height="30" Margin="30" >
+            <TextBox x:Name="txtOp1" MinWidth="100" VerticalContentAlignment="Center"></TextBox>
+            <ComboBox x:Name="cboOperacio"></ComboBox>
+            <TextBox x:Name="txtOp2" MinWidth="100"  VerticalContentAlignment="Center"></TextBox>
+            <Button x:Name="btnOperar" Click="Button_Click"   FontSize="20">=</Button>
+            <TextBox x:Name="txtRes" MinWidth="100" IsEnabled="False"  VerticalContentAlignment="Center"></TextBox>
+        </StackPanel>
+        <DataGrid x:Name="dtgPersones">
+            
+        </DataGrid>
     </StackPanel>
 </Window>

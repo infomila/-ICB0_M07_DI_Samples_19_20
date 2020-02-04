@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Product Id="51B9B38E-34AC-44DC-9B0D-84081A70BDC2" Name="SetupProject" 
+           Language="1033" Version="1.0.0.0" 
+    Manufacturer="iesmila.net" UpgradeCode="f288b138-857b-43af-adff-2343808452d2">
+		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+
+		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+		<MediaTemplate />
+  
+		<Feature Id="FEA_PRODUCT" Title="SetupProject" Level="1">
+			<ComponentGroupRef Id="CG_ProductComponents" />
+		</Feature>
+    <Feature Id="FEA_DOC" Title="Documentació" Level="4">
+			<!--ComponentGroupRef Id="CG_Documentacio" /-->
+      <ComponentGroupRef Id="CG_FULL_DOC"/>
+		</Feature>
+    
+    
+    
+    <!-- * ************************************************   UI    *************************************** -->
+    <!-- Activa la interfície gràfica del wizard -->
+    <!-- Feu “Add Reference” sobre el projecte, aneu a la carpeta de binaris de wix ( C:\Archivos de programa(x86)/Wix Toolset vX.X/bin )-->
+    <UIRef Id="WixUI_Mondo"/>
+    <UIRef Id="WixUI_ErrorProgressText" />
+    
+	</Product>
+
+	<Fragment>
+    <!-- Estructura de directoris a la màquina destí on s'instal·larà l'aplicació -->
+		<Directory Id="TARGETDIR" Name="SourceDir"><!-- aquesta línia sempre igual-->
+      <!-- Crear una carpeta a C:\Archivos de Programa\SetupProject -->
+			<Directory Id="ProgramFilesFolder">
+				<Directory Id="INSTALLFOLDER" Name="SetupProject" >
+          <Directory Id="DIR_DOC"  Name="Documentacio"></Directory>
+       </Directory>
+			</Directory>    
+		</Directory>
+	</Fragment>
+
+	<Fragment>
+    <!-- components situats al projecte, dins de la màquina del programador -->    
+    <!-- IMPORTANT: les variables $(var.xxxxxx) només funcionen si posem la referència del projecte al SetupProject  -->
+      
+    <!--ComponentGroup Id="CG_Documentacio" Directory="DIR_DOC">
+        <Component Id="CMP_readme">
+          <File Id="FIL_readme" Source="$(var.AppWixSetupDemo.ProjectDir)doc\readme.txt"></File>
+        </Component>
+    </ComponentGroup-->
+      
+        
+		<ComponentGroup Id="CG_ProductComponents" Directory="INSTALLFOLDER">
+			<Component Id="CMP_executable">
+        <File Id="FILE_executable" 
+              Source="$(var.AppWixSetupDemo.TargetDir)AppWixSetupDemo.exe"></File>
+      </Component>      			
+    <Component Id="CMP_llibreria">
+        <File Id="FILE_llibreria_dll" 
+              Source="$(var.AppWixSetupDemo.TargetDir)Llibreria.dll"></File>
+      </Component>      			    
+		</ComponentGroup>
+	</Fragment>
+</Wix>
